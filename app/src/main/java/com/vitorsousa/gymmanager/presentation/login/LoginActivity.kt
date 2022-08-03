@@ -8,6 +8,7 @@ import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import com.vitorsousa.gymmanager.presentation.MainActivity
 import com.vitorsousa.gymmanager.R
+import dagger.hilt.EntryPoint
 
 class LoginActivity : AppCompatActivity() {
 
@@ -32,6 +33,7 @@ class LoginActivity : AppCompatActivity() {
         val signInIntent = AuthUI.getInstance()
             .createSignInIntentBuilder()
             .setLogo(R.drawable.ic_launcher_foreground)
+            .setTheme(R.style.Theme_GymManager)
             .setAvailableProviders(providers)
             .build()
         signInLauncher.launch(signInIntent)

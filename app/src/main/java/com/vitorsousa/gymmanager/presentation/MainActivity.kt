@@ -10,11 +10,14 @@ import androidx.navigation.ui.navigateUp
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.viewModels
-import com.firebase.ui.auth.AuthUI
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupWithNavController
 import com.vitorsousa.gymmanager.R
 import com.vitorsousa.gymmanager.databinding.ActivityMainBinding
 import com.vitorsousa.gymmanager.presentation.login.LoginActivity
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
@@ -30,13 +33,23 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.toolbar)
 
+        setupBottomNavigation()
+        setupObservers()
+    }
+
+
+    private fun setupBottomNavigation() {
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_content_main) as NavHostFragment
+        binding.bottomNavigationView.setupWithNavController(navHostFragment.navController)
+    }
+
+    private fun setupObservers() {
         authViewModel.currentUser.observe(this) { user ->
             if (user == null) {
                 startActivity(Intent(this, LoginActivity::class.java))
                 finish()
             }
         }
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -46,12 +59,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.action_sign_out -> {
-                AuthUI.getInstance().signOut(this).addOnCompleteListener {
-                    startActivity(Intent(this, LoginActivity::class.java))
-                    finish()
-                }
-            }
+            R.id.action_sign_out -> authViewModel.userSignOut()
             else -> super.onOptionsItemSelected(item)
         }
         return true
