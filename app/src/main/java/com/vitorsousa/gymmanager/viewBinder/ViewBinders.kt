@@ -5,6 +5,7 @@ import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.google.firebase.Timestamp
+import com.vitorsousa.gymmanager.R
 import de.hdodenhof.circleimageview.CircleImageView
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -30,4 +31,12 @@ fun TextView.formatToLocalDate(timestamp: Timestamp?) {
         val dateTimeFormatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT)
         this.text = date.format(dateTimeFormatter)
     }
+}
+
+@BindingAdapter("name")
+fun TextView.displayUserName(name: String?) {
+    if (name.isNullOrBlank())
+        this.text = context?.getString(R.string.anonymous_user)
+    else
+        this.text = name
 }

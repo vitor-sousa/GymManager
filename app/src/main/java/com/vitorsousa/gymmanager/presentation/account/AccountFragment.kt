@@ -20,12 +20,9 @@ class AccountFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         _binding = FragmentAccountBinding.inflate(inflater, container, false)
         binding.viewModel = authViewModel
-
         return binding.root
-
     }
 
 

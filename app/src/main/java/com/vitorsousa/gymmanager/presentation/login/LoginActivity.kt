@@ -18,6 +18,7 @@ class LoginActivity : AppCompatActivity() {
         this.onSignInResult(res)
     }
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -28,16 +29,21 @@ class LoginActivity : AppCompatActivity() {
     private fun createLoginUi() {
         val providers = arrayListOf(
             AuthUI.IdpConfig.EmailBuilder().build(),
-            AuthUI.IdpConfig.GoogleBuilder().build()
+            AuthUI.IdpConfig.GoogleBuilder().build(),
+            AuthUI.IdpConfig.AnonymousBuilder().build()
         )
         val signInIntent = AuthUI.getInstance()
             .createSignInIntentBuilder()
-            .setLogo(R.drawable.ic_launcher_foreground)
+            .setLogo(R.mipmap.ic_launcher_foreground)
             .setTheme(R.style.Theme_GymManager)
             .setAvailableProviders(providers)
+            .setTosAndPrivacyPolicyUrls(
+                "https://example.com/terms.html",
+                "https://example.com/privacy.html")
             .build()
         signInLauncher.launch(signInIntent)
     }
+
 
     private fun onSignInResult(result: FirebaseAuthUIAuthenticationResult) {
         val response = result.idpResponse

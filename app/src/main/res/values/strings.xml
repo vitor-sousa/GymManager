@@ -3,4 +3,9 @@
     <string name="workouts_fragment_label">Workouts</string>
     <string name="account_fragment_label">Account</string>
     <string name="action_sign_out">Sign Out</string>
+    <string name="new_workout">New Workout</string>
+    <string name="anonymous_user">Anonymous User</string>
+    <string name="send">Send</string>
+    <string name="description">description</string>
+    <string name="name">Name</string>
 </resources>

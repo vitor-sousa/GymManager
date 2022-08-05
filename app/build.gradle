@@ -16,6 +16,7 @@ ext {
     lifecycle_version = "2.5.0"
     recyclerview_version = "1.2.1"
     dagger_hilt_version = "2.42"
+    fragment_version = "1.4.1"
     firebase_ui_auth = "7.2.0"
     firebase_auth = "21.0.6"
     play_services_auth = "20.2.0"
@@ -82,6 +83,9 @@ dependencies {
     // Dagger Hilt
     implementation "com.google.dagger:hilt-android:$dagger_hilt_version"
     kapt "com.google.dagger:hilt-android-compiler:$dagger_hilt_version"
+
+    //Fragment
+    implementation("androidx.fragment:fragment-ktx:$fragment_version")
 
     //Firebase
     implementation "com.firebaseui:firebase-ui-auth:$firebase_ui_auth"

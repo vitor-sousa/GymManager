@@ -4,4 +4,9 @@
     <string name="workouts_fragment_label">Treinos</string>
     <string name="account_fragment_label">Conta</string>
     <string name="action_sign_out">Deslogar</string>
+    <string name="new_workout">Novo Treino</string>
+    <string name="anonymous_user">Usuário Anônimo</string>
+    <string name="description">Descrição</string>
+    <string name="name">Nome</string>
+    <string name="send">Enviar</string>
 </resources>

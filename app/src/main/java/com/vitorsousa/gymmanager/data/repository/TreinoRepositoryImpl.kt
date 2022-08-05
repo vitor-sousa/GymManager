@@ -1,5 +1,6 @@
 package com.vitorsousa.gymmanager.data.repository
 
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.Query
 import com.vitorsousa.gymmanager.domain.models.Treino
@@ -10,7 +11,7 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class TreinoRepositoryImpl @Inject constructor(
-    private val treinoRef: CollectionReference
+    private val treinoRef: CollectionReference,
 ): TreinoRepository {
 
     override suspend fun addTreino(treino: Treino): Result<Treino> =
