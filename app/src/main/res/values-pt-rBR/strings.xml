@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Gym Manager</string>
+    <string name="workouts_fragment_label">Treinos</string>
+    <string name="account_fragment_label">Conta</string>
+    <string name="action_sign_out">Deslogar</string>
+</resources>

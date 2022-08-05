@@ -21,8 +21,8 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/userImage"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
                 app:srcUrl='@{viewModel.currentUser.photoUrl}'
                 app:layout_constraintBottom_toTopOf="@id/userName"
                 app:layout_constraintEnd_toEndOf="parent"

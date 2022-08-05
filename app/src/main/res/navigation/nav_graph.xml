@@ -7,9 +7,9 @@
 
     <fragment
         android:id="@+id/FirstFragment"
-        android:name="com.vitorsousa.gymmanager.presentation.treinos.FirstFragment"
-        android:label="@string/first_fragment_label"
-        tools:layout="@layout/fragment_first"/>
+        android:name="com.vitorsousa.gymmanager.presentation.treinos.TreinosFragment"
+        android:label="@string/workouts_fragment_label"
+        tools:layout="@layout/fragment_treinos"/>
     <fragment
         android:id="@+id/AccountFragment"
         android:name="com.vitorsousa.gymmanager.presentation.account.AccountFragment"
