@@ -23,28 +23,30 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/gradient"
-            android:padding="15dp">
+            android:padding="5dp">
 
             <TextView
                 android:id="@+id/nome"
                 style="@style/TextAppearance.Material3.HeadlineSmall"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
                 android:text="@{treino.nome}"
-                android:textStyle="bold"
                 android:textColor="@color/white"
-                app:layout_constraintTop_toTopOf="parent"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@id/descricao"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/descricao"
-                tools:text="Nome do Treino"/>
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Nome do Treino" />
 
             <TextView
                 android:id="@+id/descricao"
                 style="@style/TextAppearance.Material3.BodySmall"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
+                android:layout_marginStart="15dp"
                 android:layout_marginTop="10dp"
                 android:text="@{treino.descricao}"
                 android:textColor="@color/white"
@@ -55,11 +57,11 @@
 
             <Button
                 android:id="@+id/deleteButton"
-                style="@style/Widget.Material3.Button.TextButton"
+                style="@style/Widget.Material3.Button.ElevatedButton.Icon"
+                app:icon="@android:drawable/ic_delete"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:textColor="@color/black"
                 android:text="@string/delete"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
