@@ -7,6 +7,7 @@ import com.google.firebase.Timestamp
 import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.QuerySnapshot
+import com.vitorsousa.gymmanager.core.SingleLiveData
 import com.vitorsousa.gymmanager.domain.models.DataState
 import com.vitorsousa.gymmanager.domain.models.Treino
 import com.vitorsousa.gymmanager.domain.repositories.TreinoRepository
@@ -29,7 +30,7 @@ class TreinoViewModel @Inject constructor(
     var nome: String = ""
     var descricao: String = ""
 
-    var saveStatus = MutableLiveData<DataState>()
+    var saveStatus = SingleLiveData<DataState>()
         private set
 
 
@@ -74,7 +75,6 @@ class TreinoViewModel @Inject constructor(
         treinoRepository.getAllTreinos(this@TreinoViewModel).fold(
             onSuccess = {
                 treinosStatus.value = DataState.SUCCESS
-                treinos.value = it
             },
             onFailure = {
                 treinosStatus.value = DataState.ERROR

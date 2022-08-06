@@ -3,12 +3,11 @@ package com.vitorsousa.gymmanager.presentation.treinos
 import android.app.Dialog
 import android.os.Bundle
 import android.view.*
-import androidx.fragment.app.Fragment
 import android.widget.Toast
-import androidx.core.view.isEmpty
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputLayout
 import com.vitorsousa.gymmanager.R
 import com.vitorsousa.gymmanager.databinding.FragmentNewTreinoBinding
@@ -89,7 +88,7 @@ class NewTreinoFragment : DialogFragment() {
                 }
                 DataState.SUCCESS -> {
                     Toast.makeText(requireContext(), "Created with success", Toast.LENGTH_SHORT).show()
-
+                    findNavController().popBackStack()
                 }
                 else -> {
                     Toast.makeText(requireContext(), "ERROR: ${it.name}", Toast.LENGTH_SHORT).show()

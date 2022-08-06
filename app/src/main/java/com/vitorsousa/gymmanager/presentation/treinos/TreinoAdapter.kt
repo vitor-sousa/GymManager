@@ -72,7 +72,7 @@ class TreinoAdapter(
 
     object DIFF_CALLBACK: DiffUtil.ItemCallback<Treino>() {
         override fun areItemsTheSame(oldItem: Treino, newItem: Treino): Boolean {
-            return newItem.treinoId == oldItem.treinoId && newItem.nome.equals(newItem.nome)
+            return newItem.treinoId == oldItem.treinoId
         }
 
         override fun areContentsTheSame(oldItem: Treino, newItem: Treino): Boolean {

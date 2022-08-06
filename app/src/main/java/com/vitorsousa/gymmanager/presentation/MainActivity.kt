@@ -14,6 +14,7 @@ import androidx.activity.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.vitorsousa.gymmanager.R
 import com.vitorsousa.gymmanager.databinding.ActivityMainBinding
@@ -51,6 +52,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupNavigation() {
         navController = findNavController(R.id.nav_host_fragment_content_main)
+        appBarConfiguration = AppBarConfiguration(setOf(R.id.treinosFragment, R.id.accountFragment))
+
+        setupActionBarWithNavController(navController, appBarConfiguration)
+
         navController.addOnDestinationChangedListener { _, navDestination: NavDestination, _ ->
             when (navDestination.id) {
                 R.id.treinoDetailFragment ->
@@ -82,6 +87,7 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_sign_out -> authViewModel.userSignOut()
+            android.R.id.home -> onSupportNavigateUp()
             else -> super.onOptionsItemSelected(item)
         }
         return true

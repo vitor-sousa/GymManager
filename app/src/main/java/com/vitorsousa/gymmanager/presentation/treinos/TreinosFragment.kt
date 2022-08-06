@@ -5,14 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.vitorsousa.gymmanager.R
 import com.vitorsousa.gymmanager.databinding.FragmentTreinosBinding
-import com.vitorsousa.gymmanager.domain.models.DataState
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -75,11 +74,13 @@ class TreinosFragment: Fragment(), TreinoItemListener, DeleteTreinoItemListener 
         treinoViewModel.treinos.observe(viewLifecycleOwner) {
             adapter.submitList(it)
         }
-        treinoViewModel.saveStatus.observe(viewLifecycleOwner) {
-            if (it == DataState.SUCCESS) {
-                findNavController().popBackStack()
+
+        adapter.registerAdapterDataObserver(object: RecyclerView.AdapterDataObserver(){
+            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+                binding.treinosRecyclerView.scrollToPosition(positionStart)
             }
-        }
+        })
+
     }
 
     private fun showNewTreinoDialog() {

@@ -38,13 +38,13 @@ class TreinoRepositoryImpl @Inject constructor(
         }
 
 
-    override suspend fun getAllTreinos(listenerRegistration: EventListener<QuerySnapshot>): Result<List<Treino>?> =
+    override suspend fun getAllTreinos(listenerRegistration: EventListener<QuerySnapshot>): Result<Unit> =
         withContext(Dispatchers.IO) {
             return@withContext try {
                 treinoRef
                     .orderBy("data", Query.Direction.DESCENDING)
                     .addSnapshotListener (listenerRegistration)
-                Result.success(listOf())
+                Result.success(Unit)
             }  catch (e: Exception) {
                 Result.failure(e)
             }

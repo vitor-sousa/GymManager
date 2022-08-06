@@ -8,5 +8,5 @@ interface TreinoRepository {
 
     suspend fun addTreino(treino: Treino): Result<Treino>
     suspend fun deleteTreino(treinoId: String): Result<Unit>
-    suspend fun getAllTreinos(listenerRegistration: EventListener<QuerySnapshot>): Result<List<Treino>?>
+    suspend fun getAllTreinos(listenerRegistration: EventListener<QuerySnapshot>): Result<Unit>
 }
