@@ -9,7 +9,10 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.activity.viewModels
+import androidx.navigation.NavController
+import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.vitorsousa.gymmanager.R
@@ -23,6 +26,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
     private val authViewModel: AuthViewModel by viewModels()
+    private lateinit var navController: NavController
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         WindowCompat.setDecorFitsSystemWindows(window, false)
@@ -33,6 +38,7 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.toolbar)
 
+        setupNavigation()
         setupBottomNavigation()
         setupObservers()
     }
@@ -41,6 +47,22 @@ class MainActivity : AppCompatActivity() {
     private fun setupBottomNavigation() {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_content_main) as NavHostFragment
         binding.bottomNavigationView.setupWithNavController(navHostFragment.navController)
+    }
+
+    private fun setupNavigation() {
+        navController = findNavController(R.id.nav_host_fragment_content_main)
+        navController.addOnDestinationChangedListener { _, navDestination: NavDestination, _ ->
+            when (navDestination.id) {
+                R.id.treinoDetailFragment ->
+                    binding.bottomNavigationView.visibility = View.GONE
+                R.id.newTreinoFragment ->
+                    binding.bottomNavigationView.visibility = View.GONE
+                else -> {
+                    binding.toolbar.visibility = View.VISIBLE
+                    binding.bottomNavigationView.visibility = View.VISIBLE
+                }
+            }
+        }
     }
 
     private fun setupObservers() {
@@ -66,7 +88,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        val navController = findNavController(R.id.nav_host_fragment_content_main)
         return navController.navigateUp(appBarConfiguration)
                 || super.onSupportNavigateUp()
     }

@@ -5,7 +5,6 @@
     </style>
 
     <style name="FullScreenDialogStyle">
-        <item name="android:windowFullscreen">true</item>
         <item name="android:windowIsFloating">false</item>
     </style>
 

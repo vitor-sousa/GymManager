@@ -3,16 +3,31 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/FirstFragment">
+    app:startDestination="@id/treinosFragment">
 
     <fragment
-        android:id="@+id/FirstFragment"
+        android:id="@+id/treinosFragment"
         android:name="com.vitorsousa.gymmanager.presentation.treinos.TreinosFragment"
         android:label="@string/workouts_fragment_label"
-        tools:layout="@layout/fragment_treinos"/>
+        tools:layout="@layout/fragment_treinos">
+        <action
+            android:id="@+id/action_treinosFragment_to_treinoDetailFragment"
+            app:destination="@id/treinoDetailFragment" />
+        <action
+            android:id="@+id/action_treinosFragment_to_newTreinoFragment"
+            app:destination="@id/newTreinoFragment" />
+    </fragment>
     <fragment
-        android:id="@+id/AccountFragment"
+        android:id="@+id/accountFragment"
         android:name="com.vitorsousa.gymmanager.presentation.account.AccountFragment"
         android:label="@string/account_fragment_label"
         tools:layout="@layout/fragment_account"/>
+    <fragment
+        android:id="@+id/treinoDetailFragment"
+        android:name="com.vitorsousa.gymmanager.presentation.detail.TreinoDetailFragment"
+        android:label="TreinoDetailFragment" />
+    <dialog
+        android:id="@+id/newTreinoFragment"
+        android:name="com.vitorsousa.gymmanager.presentation.treinos.NewTreinoFragment"
+        android:label="NewTreinoFragment" />
 </navigation>

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/FirstFragment"
+    <item android:id="@+id/treinosFragment"
         android:title="@string/workouts_fragment_label"
         android:icon="@drawable/gym"/>
 
-    <item android:id="@+id/AccountFragment"
+    <item android:id="@+id/accountFragment"
         android:title="@string/account_fragment_label"
         android:icon="@drawable/ic_account_circle"/>
 </menu>
