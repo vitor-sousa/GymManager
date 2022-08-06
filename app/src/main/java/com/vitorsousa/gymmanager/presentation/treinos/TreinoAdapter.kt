@@ -8,19 +8,27 @@ import com.vitorsousa.gymmanager.databinding.TreinoItemBinding
 import com.vitorsousa.gymmanager.domain.models.Treino
 
 interface TreinoItemListener {
-    fun onItemSelected(id: Int)
+    fun onItemSelected(id: String)
 }
 
+interface DeleteTreinoItemListener {
+    fun onDeleteClickListener(id: String, position: Int)
+}
+
+
 class TreinoAdapter(
-    private val listener: TreinoItemListener
+    private val onItemSelectedListener: TreinoItemListener,
+    private val onDeleteTreinoItemListener: DeleteTreinoItemListener
 ): RecyclerView.Adapter<TreinoAdapter.ViewHolder>() {
 
-    private var values: List<Treino> = ArrayList()
+    private var treinosLista = mutableListOf<Treino>()
 
-    fun updateList(movies: List<Treino>) {
-        values = movies
+    fun updateList(treinos: List<Treino>) {
+        treinosLista.clear()
+        treinosLista.addAll(treinos)
         notifyDataSetChanged()
     }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
@@ -35,19 +43,30 @@ class TreinoAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = values[position]
+        val item = treinosLista[position]
         holder.bindItem(item)
-//        holder.view.setOnClickListener {
-//            item.id?.let { id -> listener.onItemSelected(id) }
-//        }
-
+        holder.view.setOnClickListener {
+            onItemSelectedListener.onItemSelected(item.treinoId)
+        }
+        holder.deleteButton.setOnClickListener {
+            onDeleteTreinoItemListener.onDeleteClickListener(
+                id = item.treinoId,
+                position = holder.layoutPosition
+            )
+        }
     }
 
-    override fun getItemCount(): Int = values.size
+    fun removeItemAt(position: Int) {
+        treinosLista.removeAt(position)
+        notifyItemRemoved(position)
+    }
+
+    override fun getItemCount(): Int = treinosLista.size
 
     inner class ViewHolder(private val binding: TreinoItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         val view: View = binding.root
+        val deleteButton = binding.deleteButton
 
         fun bindItem(item: Treino) {
             binding.treino = item

@@ -5,9 +5,11 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.Toast
+import androidx.core.view.isEmpty
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
+import com.google.android.material.textfield.TextInputLayout
 import com.vitorsousa.gymmanager.R
 import com.vitorsousa.gymmanager.databinding.FragmentNewTreinoBinding
 import com.vitorsousa.gymmanager.domain.models.DataState
@@ -44,6 +46,20 @@ class NewTreinoFragment : DialogFragment() {
         return dialog
     }
 
+    private fun isEditTextsEmpty(textInputLayout: TextInputLayout): Boolean {
+        return when (textInputLayout.editText?.text.isNullOrEmpty()) {
+            true -> {
+                textInputLayout.isErrorEnabled = true
+                textInputLayout.error = "Está vazio"
+                true
+            } else -> {
+                textInputLayout.isErrorEnabled = true
+                textInputLayout.error = null
+                false
+            }
+        }
+    }
+
     private fun setupObservers() {
         binding.nomeTextField.editText?.setText(treinoViewModel.nome)
         binding.descricaoTextField.editText?.setText(treinoViewModel.descricao)
@@ -61,7 +77,8 @@ class NewTreinoFragment : DialogFragment() {
         }
 
         binding.createButton.setOnClickListener {
-            treinoViewModel.saveTreino()
+            if(!isEditTextsEmpty(binding.nomeTextField) && !isEditTextsEmpty(binding.descricaoTextField))
+                treinoViewModel.saveTreino()
         }
 
         treinoViewModel.saveStatus.observe(viewLifecycleOwner) {
@@ -74,7 +91,7 @@ class NewTreinoFragment : DialogFragment() {
                     Toast.makeText(requireContext(), "Created with success", Toast.LENGTH_SHORT).show()
 
                 }
-                DataState.ERROR -> {
+                else -> {
                     Toast.makeText(requireContext(), "ERROR: ${it.name}", Toast.LENGTH_SHORT).show()
                 }
             }

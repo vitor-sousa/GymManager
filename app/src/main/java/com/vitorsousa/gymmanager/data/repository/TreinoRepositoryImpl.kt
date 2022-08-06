@@ -1,6 +1,5 @@
 package com.vitorsousa.gymmanager.data.repository
 
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.Query
 import com.vitorsousa.gymmanager.domain.models.Treino
@@ -24,6 +23,20 @@ class TreinoRepositoryImpl @Inject constructor(
                 return@withContext Result.failure(e)
             }
     }
+
+    override suspend fun deleteTreino(treinoId: String): Result<Unit> =
+        withContext(Dispatchers.IO) {
+            return@withContext try {
+                treinoRef
+                    .document(treinoId)
+                    .delete()
+                    .await()
+                Result.success(Unit)
+            }  catch (e: Exception) {
+                Result.failure(e)
+            }
+        }
+
 
     override suspend fun getAllTreinos(): Result<List<Treino>?> =
         withContext(Dispatchers.IO) {

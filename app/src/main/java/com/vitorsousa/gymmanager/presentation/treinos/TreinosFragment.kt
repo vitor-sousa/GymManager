@@ -1,5 +1,6 @@
 package com.vitorsousa.gymmanager.presentation.treinos
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,8 +11,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.behavior.SwipeDismissBehavior
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.ktx.firestore
@@ -26,7 +29,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 
 @AndroidEntryPoint
-class TreinosFragment: Fragment(), TreinoItemListener {
+class TreinosFragment: Fragment(), TreinoItemListener, DeleteTreinoItemListener {
 
     private var _binding: FragmentTreinosBinding? = null
     private val binding get() = _binding!!
@@ -49,7 +52,7 @@ class TreinosFragment: Fragment(), TreinoItemListener {
 
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = treinoViewModel
-        adapter = TreinoAdapter(this)
+        adapter = TreinoAdapter(this, this)
         binding.treinosRecyclerView.apply {
             this.adapter = this@TreinosFragment.adapter
             this.layoutManager = LinearLayoutManager(context)
@@ -57,6 +60,28 @@ class TreinosFragment: Fragment(), TreinoItemListener {
         setupObservers()
     }
 
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    override fun onItemSelected(id: String) {
+        println(id)
+    }
+
+    override fun onDeleteClickListener(id: String, position: Int) {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle("Excluir Treino")
+            .setMessage("Tem certeza que deseja excluir esse treino?")
+            .setNegativeButton("Cancelar") { _, _ -> }
+            .setPositiveButton("Excluir") { _, _ ->
+                treinoViewModel.deleteTreino(id)
+                adapter.removeItemAt(position)
+            }
+            .create()
+            .show()
+    }
 
     private fun setupObservers() {
         binding.addButton.setOnClickListener {
@@ -75,16 +100,6 @@ class TreinosFragment: Fragment(), TreinoItemListener {
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
-    override fun onItemSelected(id: Int) {
-        TODO("Not yet implemented")
-    }
-
-
     private fun showNewTreinoDialog() {
         val fragmentManager = childFragmentManager
         newFragment = NewTreinoFragment()
@@ -97,4 +112,6 @@ class TreinosFragment: Fragment(), TreinoItemListener {
             .commit()
 
     }
+
+
 }

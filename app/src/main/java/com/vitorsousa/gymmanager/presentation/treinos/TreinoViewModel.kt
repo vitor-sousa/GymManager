@@ -8,7 +8,6 @@ import com.vitorsousa.gymmanager.domain.models.DataState
 import com.vitorsousa.gymmanager.domain.models.Treino
 import com.vitorsousa.gymmanager.domain.repositories.TreinoRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
@@ -18,7 +17,7 @@ class TreinoViewModel @Inject constructor(
     private val treinoRepository: TreinoRepository
 ): ViewModel() {
 
-    var status = MutableLiveData<DataState>()
+    var treinosStatus = MutableLiveData<DataState>()
         private set
 
     var treinos = MutableLiveData<List<Treino>>()
@@ -38,6 +37,7 @@ class TreinoViewModel @Inject constructor(
 
     fun saveTreino() = viewModelScope.launch {
         val treino = Treino(
+            treinoId = "",
             nome =  nome,
             descricao = descricao,
             data = Timestamp(Date()),
@@ -57,16 +57,24 @@ class TreinoViewModel @Inject constructor(
         )
     }
 
+    fun deleteTreino(treinoId: String) = viewModelScope.launch {
+        treinosStatus.value = DataState.LOADING
+        treinoRepository.deleteTreino(treinoId).fold(
+            onSuccess = { treinosStatus.value = DataState.SUCCESS },
+            onFailure = { treinosStatus.value = DataState.ERROR }
+        )
+    }
+
     private fun getAllTreinos() = viewModelScope.launch {
-        status.value = DataState.LOADING
+        treinosStatus.value = DataState.LOADING
 
         treinoRepository.getAllTreinos().fold(
             onSuccess = {
-                status.value = DataState.SUCCESS
+                treinosStatus.value = DataState.SUCCESS
                 treinos.value = it
             },
             onFailure = {
-                status.value = DataState.ERROR
+                treinosStatus.value = DataState.ERROR
                 println("error: ${it.message}")
             }
         )
