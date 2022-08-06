@@ -57,10 +57,10 @@ class TreinosFragment: Fragment(), TreinoItemListener, DeleteTreinoItemListener 
 
     override fun onDeleteClickListener(id: String, position: Int) {
         MaterialAlertDialogBuilder(requireContext())
-            .setTitle("Excluir Treino")
-            .setMessage("Tem certeza que deseja excluir esse treino?")
-            .setNegativeButton("Cancelar") { _, _ -> }
-            .setPositiveButton("Excluir") { _, _ ->
+            .setTitle(R.string.delete_workout)
+            .setMessage(R.string.are_you_sure_delete_workout)
+            .setNegativeButton(R.string.cancel) { _, _ -> }
+            .setPositiveButton(R.string.delete) { _, _ ->
                 treinoViewModel.deleteTreino(id)
             }
             .create()

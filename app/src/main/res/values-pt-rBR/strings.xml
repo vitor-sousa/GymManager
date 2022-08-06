@@ -10,4 +10,7 @@
     <string name="name">Nome</string>
     <string name="send">Enviar</string>
     <string name="delete">Excluir</string>
+    <string name="cancel">Cancelar</string>
+    <string name="delete_workout">Excluir Treino</string>
+    <string name="are_you_sure_delete_workout">Você tem certeza que deseja excluir esse treino?</string>
 </resources>
