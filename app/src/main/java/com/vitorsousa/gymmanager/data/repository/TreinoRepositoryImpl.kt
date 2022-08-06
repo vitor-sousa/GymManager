@@ -1,7 +1,7 @@
 package com.vitorsousa.gymmanager.data.repository
 
-import com.google.firebase.firestore.CollectionReference
-import com.google.firebase.firestore.Query
+import android.util.Log
+import com.google.firebase.firestore.*
 import com.vitorsousa.gymmanager.domain.models.Treino
 import com.vitorsousa.gymmanager.domain.repositories.TreinoRepository
 import kotlinx.coroutines.Dispatchers
@@ -38,16 +38,13 @@ class TreinoRepositoryImpl @Inject constructor(
         }
 
 
-    override suspend fun getAllTreinos(): Result<List<Treino>?> =
+    override suspend fun getAllTreinos(listenerRegistration: EventListener<QuerySnapshot>): Result<List<Treino>?> =
         withContext(Dispatchers.IO) {
             return@withContext try {
-                val snapshot = treinoRef
+                treinoRef
                     .orderBy("data", Query.Direction.DESCENDING)
-                    .get()
-                    .await()
-                    .toObjects(Treino::class.java)
-
-                Result.success(snapshot)
+                    .addSnapshotListener (listenerRegistration)
+                Result.success(listOf())
             }  catch (e: Exception) {
                 Result.failure(e)
             }

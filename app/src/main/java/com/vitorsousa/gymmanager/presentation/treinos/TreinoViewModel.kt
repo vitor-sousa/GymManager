@@ -4,6 +4,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.Timestamp
+import com.google.firebase.firestore.EventListener
+import com.google.firebase.firestore.FirebaseFirestoreException
+import com.google.firebase.firestore.QuerySnapshot
 import com.vitorsousa.gymmanager.domain.models.DataState
 import com.vitorsousa.gymmanager.domain.models.Treino
 import com.vitorsousa.gymmanager.domain.repositories.TreinoRepository
@@ -15,7 +18,7 @@ import javax.inject.Inject
 @HiltViewModel
 class TreinoViewModel @Inject constructor(
     private val treinoRepository: TreinoRepository
-): ViewModel() {
+): ViewModel(), EventListener<QuerySnapshot> {
 
     var treinosStatus = MutableLiveData<DataState>()
         private set
@@ -68,7 +71,7 @@ class TreinoViewModel @Inject constructor(
     private fun getAllTreinos() = viewModelScope.launch {
         treinosStatus.value = DataState.LOADING
 
-        treinoRepository.getAllTreinos().fold(
+        treinoRepository.getAllTreinos(this@TreinoViewModel).fold(
             onSuccess = {
                 treinosStatus.value = DataState.SUCCESS
                 treinos.value = it
@@ -78,5 +81,9 @@ class TreinoViewModel @Inject constructor(
                 println("error: ${it.message}")
             }
         )
+    }
+
+    override fun onEvent(value: QuerySnapshot?, error: FirebaseFirestoreException?) {
+        treinos.value = value?.toObjects(Treino::class.java)
     }
 }
