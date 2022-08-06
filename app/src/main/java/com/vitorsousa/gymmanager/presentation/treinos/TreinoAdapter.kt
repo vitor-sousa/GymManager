@@ -3,9 +3,12 @@ package com.vitorsousa.gymmanager.presentation.treinos
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.AsyncListDiffer
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.vitorsousa.gymmanager.databinding.TreinoItemBinding
 import com.vitorsousa.gymmanager.domain.models.Treino
+
 
 interface TreinoItemListener {
     fun onItemSelected(id: String)
@@ -21,17 +24,10 @@ class TreinoAdapter(
     private val onDeleteTreinoItemListener: DeleteTreinoItemListener
 ): RecyclerView.Adapter<TreinoAdapter.ViewHolder>() {
 
-    private var treinosLista = mutableListOf<Treino>()
-
-    fun updateList(treinos: List<Treino>) {
-        treinosLista.clear()
-        treinosLista.addAll(treinos)
-        notifyDataSetChanged()
-    }
+    private val mDiffer: AsyncListDiffer<Treino> = AsyncListDiffer(this, DIFF_CALLBACK)
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-
         return ViewHolder(
             TreinoItemBinding.inflate(
                 LayoutInflater.from(parent.context),
@@ -39,11 +35,10 @@ class TreinoAdapter(
                 false
             )
         )
-
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = treinosLista[position]
+        val item = mDiffer.currentList[position]
         holder.bindItem(item)
         holder.view.setOnClickListener {
             onItemSelectedListener.onItemSelected(item.treinoId)
@@ -56,12 +51,12 @@ class TreinoAdapter(
         }
     }
 
-    fun removeItemAt(position: Int) {
-        treinosLista.removeAt(position)
-        notifyItemRemoved(position)
+    fun submitList(list: List<Treino?>?) {
+        mDiffer.submitList(list)
     }
 
-    override fun getItemCount(): Int = treinosLista.size
+
+    override fun getItemCount(): Int = mDiffer.currentList.size
 
     inner class ViewHolder(private val binding: TreinoItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -73,4 +68,17 @@ class TreinoAdapter(
             binding.executePendingBindings()
         }
     }
+
+
+    object DIFF_CALLBACK: DiffUtil.ItemCallback<Treino>() {
+        override fun areItemsTheSame(oldItem: Treino, newItem: Treino): Boolean {
+            return newItem.treinoId == oldItem.treinoId && newItem.nome.equals(newItem.nome)
+        }
+
+        override fun areContentsTheSame(oldItem: Treino, newItem: Treino): Boolean {
+            return oldItem == newItem
+        }
+
+    }
+
 }

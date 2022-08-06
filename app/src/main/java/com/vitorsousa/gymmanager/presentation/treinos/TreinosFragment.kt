@@ -62,7 +62,6 @@ class TreinosFragment: Fragment(), TreinoItemListener, DeleteTreinoItemListener 
             .setNegativeButton("Cancelar") { _, _ -> }
             .setPositiveButton("Excluir") { _, _ ->
                 treinoViewModel.deleteTreino(id)
-                adapter.removeItemAt(position)
             }
             .create()
             .show()
@@ -73,7 +72,7 @@ class TreinosFragment: Fragment(), TreinoItemListener, DeleteTreinoItemListener 
             showNewTreinoDialog()
         }
         treinoViewModel.treinos.observe(viewLifecycleOwner) {
-            adapter.updateList(it)
+            adapter.submitList(it)
         }
         treinoViewModel.saveStatus.observe(viewLifecycleOwner) {
             if (it == DataState.SUCCESS && this::newFragment.isInitialized) {
