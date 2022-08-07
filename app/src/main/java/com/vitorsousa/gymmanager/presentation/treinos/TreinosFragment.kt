@@ -51,8 +51,12 @@ class TreinosFragment: Fragment(), TreinoItemListener, DeleteTreinoItemListener 
         _binding = null
     }
 
-    override fun onItemSelected(id: String) {
-        findNavController().navigate(R.id.action_treinosFragment_to_treinoDetailFragment)
+    override fun onItemSelected(position: Int) {
+        findNavController().navigate(
+            TreinosFragmentDirections.actionTreinosFragmentToTreinoDetailFragment(
+                position = position
+            )
+        )
     }
 
     override fun onDeleteClickListener(id: String, position: Int) {

@@ -4,16 +4,20 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.vitorsousa.gymmanager.domain.repositories.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class AuthViewModel @Inject constructor(
     private val application: Application,
-    currentUser: FirebaseUser?
+    auth: FirebaseAuth,
+    private val userRepository: UserRepository
 ): ViewModel() {
 
     private val _currentUser = MutableLiveData<FirebaseUser>()
@@ -21,7 +25,15 @@ class AuthViewModel @Inject constructor(
 
 
     init {
-        _currentUser.value = currentUser
+        _currentUser.value = auth.currentUser
+    }
+
+    fun saveUser(id: String, nome: String, email: String) = viewModelScope.launch {
+        userRepository.saveUser(
+            id = id,
+            nome = nome,
+            email = email
+        )
     }
 
 

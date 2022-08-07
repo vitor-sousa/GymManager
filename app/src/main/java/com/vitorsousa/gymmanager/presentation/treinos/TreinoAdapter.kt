@@ -11,7 +11,7 @@ import com.vitorsousa.gymmanager.domain.models.Treino
 
 
 interface TreinoItemListener {
-    fun onItemSelected(id: String)
+    fun onItemSelected(position: Int)
 }
 
 interface DeleteTreinoItemListener {
@@ -41,7 +41,7 @@ class TreinoAdapter(
         val item = mDiffer.currentList[position]
         holder.bindItem(item)
         holder.view.setOnClickListener {
-            onItemSelectedListener.onItemSelected(item.treinoId)
+            onItemSelectedListener.onItemSelected(position)
         }
         holder.deleteButton.setOnClickListener {
             onDeleteTreinoItemListener.onDeleteClickListener(

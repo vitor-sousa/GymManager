@@ -12,7 +12,7 @@
         tools:layout="@layout/fragment_treinos">
         <action
             android:id="@+id/action_treinosFragment_to_treinoDetailFragment"
-            app:destination="@id/treinoDetailFragment" />
+            app:destination="@id/treinoDetailFragment"/>
         <action
             android:id="@+id/action_treinosFragment_to_newTreinoFragment"
             app:destination="@id/newTreinoFragment" />
@@ -24,8 +24,11 @@
         tools:layout="@layout/fragment_account"/>
     <fragment
         android:id="@+id/treinoDetailFragment"
-        android:name="com.vitorsousa.gymmanager.presentation.detail.TreinoDetailFragment"
-        android:label="TreinoDetailFragment" />
+        android:name="com.vitorsousa.gymmanager.presentation.detail.TreinoDetailFragment">
+        <argument
+            android:name="position"
+            app:argType="integer" />
+    </fragment>
     <dialog
         android:id="@+id/newTreinoFragment"
         android:name="com.vitorsousa.gymmanager.presentation.treinos.NewTreinoFragment"
