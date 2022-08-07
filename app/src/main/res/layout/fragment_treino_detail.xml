@@ -4,12 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="com.vitorsousa.gymmanager.domain.models.DataState"/>
+        <import type="android.view.View"/>
+        <variable
+            name="viewModel"
+            type="com.vitorsousa.gymmanager.presentation.exercicio.ExercicioViewModel" />
         <variable
             name="treino"
             type="com.vitorsousa.gymmanager.domain.models.Treino" />
     </data>
 
-    <androidx.core.widget.NestedScrollView
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -20,10 +25,11 @@
 
             <TextView
                 android:id="@+id/descricao"
-                style="@style/TextAppearance.Material3.BodyLarge"
+                style="@style/TextAppearance.Material3.TitleLarge"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@{treino.descricao}"
+                android:gravity="center"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -31,11 +37,12 @@
 
             <TextView
                 android:id="@+id/data"
-                style="@style/TextAppearance.Material3.BodyMedium"
+                style="@style/TextAppearance.Material3.LabelLarge"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:textAlignment="center"
+                android:textStyle="bold"
                 app:dateToFormat="@{treino.data}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -44,28 +51,55 @@
 
             <TextView
                 android:id="@+id/exerciciosTextView"
-                style="@style/TextAppearance.Material3.TitleLarge"
-                android:textStyle="bold"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
+                style="@style/TextAppearance.Material3.HeadlineSmall"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/gradient"
+                android:gravity="center"
                 android:text="@string/exercises"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@id/exerciciosRecyclerView"
+                app:layout_constraintEnd_toStartOf="@id/addExercicioFloatButton"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/data"/>
+                app:layout_constraintTop_toBottomOf="@id/data" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/exerciciosRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/exerciciosTextView"
-                tools:listitem="@layout/exercicio_item"/>
+                app:layout_constraintTop_toBottomOf="@id/addExercicioFloatButton"
+                tools:listitem="@layout/exercicio_item" />
+
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:id="@+id/addExercicioFloatButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/new_exercise"
+                android:layout_margin="10dp"
+                app:icon="@android:drawable/ic_input_add"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/exerciciosTextView"
+                app:layout_constraintStart_toEndOf="@id/exerciciosTextView"
+                app:layout_constraintTop_toTopOf="@id/exerciciosTextView" />
+
+            <ProgressBar
+                android:id="@+id/progress_circular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:visibility="@{viewModel.exerciciosStatus == DataState.LOADING ? View.VISIBLE : View.GONE}"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </androidx.core.widget.NestedScrollView>
+    </ScrollView>
 
 </layout>

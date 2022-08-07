@@ -9,7 +9,9 @@ import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.QuerySnapshot
 import com.vitorsousa.gymmanager.core.SingleLiveData
 import com.vitorsousa.gymmanager.domain.models.DataState
+import com.vitorsousa.gymmanager.domain.models.Exercicio
 import com.vitorsousa.gymmanager.domain.models.Treino
+import com.vitorsousa.gymmanager.domain.repositories.ExercicioRepository
 import com.vitorsousa.gymmanager.domain.repositories.TreinoRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -18,7 +20,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class TreinoViewModel @Inject constructor(
-    private val treinoRepository: TreinoRepository
+    private val treinoRepository: TreinoRepository,
 ): ViewModel(), EventListener<QuerySnapshot> {
 
     var treinosStatus = MutableLiveData<DataState>()
@@ -44,8 +46,7 @@ class TreinoViewModel @Inject constructor(
             treinoId = "",
             nome =  nome,
             descricao = descricao,
-            data = Timestamp(Date()),
-            exercicios = emptyList()
+            data = Timestamp(Date())
         )
 
         saveStatus.value = DataState.LOADING
@@ -68,6 +69,8 @@ class TreinoViewModel @Inject constructor(
             onFailure = { treinosStatus.value = DataState.ERROR }
         )
     }
+
+
 
     private fun getAllTreinos() = viewModelScope.launch {
         treinosStatus.value = DataState.LOADING

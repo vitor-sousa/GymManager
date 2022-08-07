@@ -5,14 +5,15 @@
 
     <data>
         <variable
-            name="treino"
-            type="com.vitorsousa.gymmanager.domain.models.Treino" />
+            name="exercico"
+            type="com.vitorsousa.gymmanager.domain.models.Exercicio" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
-        android:layout_height="140dp"
-        android:layout_margin="10dp"
+        android:layout_height="wrap_content"
+        android:minHeight="120dp"
+        android:layout_margin="5dp"
         android:checkable="true"
         android:clickable="true"
         android:focusable="true"
@@ -21,55 +22,61 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/gradient">
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/imagem"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                app:srcImage="@{exercico.imagem}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
 
             <TextView
                 android:id="@+id/nome"
                 style="@style/TextAppearance.Material3.HeadlineSmall"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                android:text="@{treino.nome}"
-                android:textColor="@color/white"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:text="@{exercico.nome}"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@id/descricao"
+                app:layout_constraintBottom_toTopOf="@id/observacoes"
                 app:layout_constraintEnd_toStartOf="@id/deleteButton"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@id/imagem"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="Nome do Treino" />
+                tools:text="Nome do Exercicio" />
 
             <TextView
-                android:id="@+id/descricao"
+                android:id="@+id/observacoes"
                 style="@style/TextAppearance.Material3.BodyLarge"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_marginStart="13dp"
+                android:layout_marginStart="5dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="5dp"
-                android:layout_marginBottom="10dp"
-                android:text="@{treino.descricao}"
-                android:textColor="@color/white"
+                android:layout_marginBottom="5dp"
+                android:text="@{exercico.observacoes}"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/deleteButton"
-                tools:text="Descricao do Treino" />
+                app:layout_constraintEnd_toStartOf="@id/deleteButton"
+                app:layout_constraintStart_toEndOf="@id/imagem"
+                app:layout_constraintTop_toBottomOf="@+id/nome"
+                tools:text="Observações do Exercicio" />
 
             <Button
                 android:id="@+id/deleteButton"
                 style="@style/Widget.Material3.Button.IconButton"
+                android:backgroundTint="@color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="5dp"
-                android:backgroundTint="@color/white"
+                android:layout_marginBottom="5dp"
                 app:icon="@android:drawable/ic_delete"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

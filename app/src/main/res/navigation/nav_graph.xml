@@ -28,9 +28,23 @@
         <argument
             android:name="position"
             app:argType="integer" />
+        <argument
+            android:name="treinoId"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_treinoDetailFragment_to_newExercicioFragment"
+            app:destination="@id/newExercicioFragment" />
     </fragment>
     <dialog
         android:id="@+id/newTreinoFragment"
         android:name="com.vitorsousa.gymmanager.presentation.treinos.NewTreinoFragment"
         android:label="NewTreinoFragment" />
+    <dialog
+        android:id="@+id/newExercicioFragment"
+        android:name="com.vitorsousa.gymmanager.presentation.detail.NewExercicioFragment"
+        android:label="NewExercicioFragment" >
+        <argument
+            android:name="treinoId"
+            app:argType="string" />
+    </dialog>
 </navigation>

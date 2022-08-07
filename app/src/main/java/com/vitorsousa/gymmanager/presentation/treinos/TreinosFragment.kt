@@ -51,15 +51,16 @@ class TreinosFragment: Fragment(), TreinoItemListener, DeleteTreinoItemListener 
         _binding = null
     }
 
-    override fun onItemSelected(position: Int) {
+    override fun onItemSelected(position: Int, id: String) {
         findNavController().navigate(
             TreinosFragmentDirections.actionTreinosFragmentToTreinoDetailFragment(
-                position = position
+                position = position,
+                treinoId = id
             )
         )
     }
 
-    override fun onDeleteClickListener(id: String, position: Int) {
+    override fun onDeleteClickListener(id: String) {
         MaterialAlertDialogBuilder(requireContext())
             .setTitle(R.string.delete_workout)
             .setMessage(R.string.are_you_sure_delete_workout)
@@ -72,7 +73,7 @@ class TreinosFragment: Fragment(), TreinoItemListener, DeleteTreinoItemListener 
     }
 
     private fun setupObservers() {
-        binding.addButton.setOnClickListener {
+        binding.addTreinoFloatButton.setOnClickListener {
             showNewTreinoDialog()
         }
         treinoViewModel.treinos.observe(viewLifecycleOwner) {

@@ -8,10 +8,15 @@
     <string name="anonymous_user">Usuário Anônimo</string>
     <string name="description">Descrição</string>
     <string name="name">Nome</string>
-    <string name="send">Enviar</string>
+    <string name="create">Criar</string>
     <string name="delete">Excluir</string>
     <string name="cancel">Cancelar</string>
     <string name="delete_workout">Excluir Treino</string>
     <string name="are_you_sure_delete_workout">Você tem certeza que deseja excluir esse treino?</string>
     <string name="exercises">Exercicios</string>
+    <string name="delete_exercise">Deletar Exercicio</string>
+    <string name="are_you_sure_delete_exercise">Você tem certeza que deseja excluir esse exercicio?</string>
+    <string name="cant_be_empty">Não pode ficar vazio!</string>
+    <string name="observations">Observações</string>
+    <string name="new_exercise">Novo Exercicio</string>
 </resources>

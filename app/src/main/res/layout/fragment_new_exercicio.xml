@@ -10,11 +10,11 @@
         tools:context=".presentation.treinos.NewTreinoFragment">
 
         <TextView
-            android:id="@+id/newWorkout"
+            android:id="@+id/newExercise"
             style="@style/TextAppearance.Material3.HeadlineLarge"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/new_workout"
+            android:text="@string/new_exercise"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -27,7 +27,7 @@
             android:layout_marginTop="30dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/newWorkout"
+            app:layout_constraintTop_toBottomOf="@+id/newExercise"
             android:hint="@string/name">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -38,14 +38,14 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/descricaoTextField"
+            android:id="@+id/observacoesTextField"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/nomeTextField"
-            android:hint="@string/description">
+            android:hint="@string/observations">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -54,6 +54,15 @@
                 android:inputType="textAutoComplete|textCapSentences" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="30dp"
+            android:src="@android:drawable/ic_menu_gallery"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/observacoesTextField" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/createButton"
@@ -74,7 +83,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

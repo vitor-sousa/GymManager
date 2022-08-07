@@ -1,7 +1,9 @@
 package com.vitorsousa.gymmanager.di
 
+import com.vitorsousa.gymmanager.data.repository.ExercicioRepositoryImpl
 import com.vitorsousa.gymmanager.data.repository.TreinoRepositoryImpl
 import com.vitorsousa.gymmanager.data.repository.UserRepositoryImpl
+import com.vitorsousa.gymmanager.domain.repositories.ExercicioRepository
 import com.vitorsousa.gymmanager.domain.repositories.TreinoRepository
 import com.vitorsousa.gymmanager.domain.repositories.UserRepository
 import dagger.Binds
@@ -16,13 +18,19 @@ abstract class RepositoryModule {
 
     @Binds
     @Singleton
+    abstract fun bindsUserRepository(
+        userRepositoryImpl: UserRepositoryImpl
+    ): UserRepository
+
+    @Binds
+    @Singleton
     abstract fun bindsTreinoRepository(
         treinoRepositoryImpl: TreinoRepositoryImpl
     ): TreinoRepository
 
     @Binds
     @Singleton
-    abstract fun bindsUserRepository(
-        userRepositoryImpl: UserRepositoryImpl
-    ): UserRepository
+    abstract fun bindsExercicioRepository(
+        exercicioRepositoryImpl: ExercicioRepositoryImpl
+    ): ExercicioRepository
 }

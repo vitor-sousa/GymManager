@@ -1,6 +1,7 @@
 package com.vitorsousa.gymmanager.viewBinder
 
 import android.net.Uri
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
@@ -20,6 +21,17 @@ fun CircleImageView.loadScrUrl(uri: Uri?){
             .with(this)
             .load(uri)
             .fitCenter()
+            .into(this)
+    }
+}
+
+@BindingAdapter("srcImage")
+fun ImageView.loadScrUrl(uri: String?){
+    uri?.let {
+        Glide
+            .with(this)
+            .load(uri)
+            .centerCrop()
             .into(this)
     }
 }

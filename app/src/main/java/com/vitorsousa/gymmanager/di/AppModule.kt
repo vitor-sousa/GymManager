@@ -1,34 +1,45 @@
 package com.vitorsousa.gymmanager.di
 
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.vitorsousa.gymmanager.core.Constants.TREINO
-import com.vitorsousa.gymmanager.core.Constants.USER
+import com.vitorsousa.gymmanager.core.Constants.EXERCICIOS
+import com.vitorsousa.gymmanager.core.Constants.TREINOS
+import com.vitorsousa.gymmanager.core.Constants.USERS
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import javax.inject.Named
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
 
     @Provides
+    @Singleton
     fun provideFirebaseAuth(): FirebaseAuth = FirebaseAuth.getInstance()
-
-    @Provides
-    fun provideCurrentUser(auth: FirebaseAuth): FirebaseUser? = auth.currentUser
 
     @Provides
     fun provideFirebaseFirestore(): FirebaseFirestore = Firebase.firestore
 
     @Provides
-    fun provideTreinoRef(db: FirebaseFirestore) = db.collection(TREINO)
+    @Named(USERS)
+    fun provideUserRef(db: FirebaseFirestore): CollectionReference = db.collection(USERS)
+
+    @Provides
+    @Named(TREINOS)
+    fun provideTreinoRef(@Named(USERS) userRef: CollectionReference, auth: FirebaseAuth): CollectionReference? =
+        auth.currentUser?.let { userRef.document(it.uid).collection(TREINOS) }
 
 //    @Provides
-//    fun provideUserRef(db: FirebaseFirestore) = db.collection(USER)
+//    @Named(EXERCICIOS)
+//    fun provideExercicioRef(@Named(TREINOS) treinosRef: CollectionReference?): CollectionReference? =
+//        treinosRef?.let { treinosRef.document(it.id).collection(EXERCICIOS) }
+
 
 }
