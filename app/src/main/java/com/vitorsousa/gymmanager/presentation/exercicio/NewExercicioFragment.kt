@@ -1,9 +1,13 @@
-package com.vitorsousa.gymmanager.presentation.detail
+package com.vitorsousa.gymmanager.presentation.exercicio
 
 import android.app.Dialog
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
+import androidx.activity.result.ActivityResultCaller
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
@@ -12,7 +16,6 @@ import com.google.android.material.textfield.TextInputLayout
 import com.vitorsousa.gymmanager.R
 import com.vitorsousa.gymmanager.databinding.FragmentNewExercicioBinding
 import com.vitorsousa.gymmanager.domain.models.DataState
-import com.vitorsousa.gymmanager.presentation.exercicio.ExercicioViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -21,6 +24,17 @@ class NewExercicioFragment : DialogFragment() {
     private var _binding: FragmentNewExercicioBinding? = null
     private val binding get() = _binding!!
     private val exercicioViewModel: ExercicioViewModel by viewModels()
+
+    private var uri: Uri? = null
+
+
+    private val getContent = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+        uri?.let {
+            binding.image.setImageURI(uri)
+            this.uri = uri
+        }
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,7 +93,15 @@ class NewExercicioFragment : DialogFragment() {
 
         binding.createButton.setOnClickListener {
             if(!isEditTextsEmpty(binding.nomeTextField) && !isEditTextsEmpty(binding.observacoesTextField))
-                exercicioViewModel.saveExercicio()
+                exercicioViewModel.saveExercicio(uri)
+        }
+
+        binding.imageButton.setOnClickListener {
+            selectImageToUpload()
+        }
+
+        binding.image.setOnClickListener {
+            selectImageToUpload()
         }
 
         exercicioViewModel.saveStatus.observe(viewLifecycleOwner) {
@@ -98,4 +120,12 @@ class NewExercicioFragment : DialogFragment() {
             }
         }
     }
+
+    private fun selectImageToUpload() {
+        getContent.launch("image/*")
+    }
+
+
+
+
 }

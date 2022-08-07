@@ -19,4 +19,5 @@
     <string name="cant_be_empty">Não pode ficar vazio!</string>
     <string name="observations">Observações</string>
     <string name="new_exercise">Novo Exercicio</string>
+    <string name="select_a_image">Selecionar uma Imagem</string>
 </resources>

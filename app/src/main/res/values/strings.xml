@@ -18,4 +18,5 @@
     <string name="new_exercise">New Exercise</string>
     <string name="observations">Observations</string>
     <string name="cant_be_empty">Can\'t be empty!</string>
+    <string name="select_a_image">Select a Image</string>
 </resources>

@@ -6,6 +6,8 @@ import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import com.vitorsousa.gymmanager.core.Constants.EXERCICIOS
 import com.vitorsousa.gymmanager.core.Constants.TREINOS
 import com.vitorsousa.gymmanager.core.Constants.USERS
@@ -26,6 +28,12 @@ object AppModule {
 
     @Provides
     fun provideFirebaseFirestore(): FirebaseFirestore = Firebase.firestore
+
+    @Provides
+    fun provideFirebaseStorage(): FirebaseStorage = FirebaseStorage.getInstance()
+
+    @Provides
+    fun provideFirebaseStorageRef(storage: FirebaseStorage): StorageReference = storage.getReference("images/")
 
     @Provides
     @Named(USERS)

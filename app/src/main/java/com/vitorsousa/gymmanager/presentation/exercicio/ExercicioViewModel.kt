@@ -1,5 +1,6 @@
 package com.vitorsousa.gymmanager.presentation.exercicio
 
+import android.net.Uri
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -8,6 +9,7 @@ import androidx.navigation.fragment.navArgs
 import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.QuerySnapshot
+import com.google.firebase.storage.StorageReference
 import com.vitorsousa.gymmanager.core.SingleLiveData
 import com.vitorsousa.gymmanager.domain.models.DataState
 import com.vitorsousa.gymmanager.domain.models.Exercicio
@@ -22,7 +24,8 @@ import javax.inject.Inject
 @HiltViewModel
 class ExercicioViewModel @Inject constructor(
     private val exercicioRepository: ExercicioRepository,
-    state: SavedStateHandle
+    state: SavedStateHandle,
+    private val storageReference: StorageReference
 ): ViewModel(), EventListener<QuerySnapshot> {
 
     private var treinoId: String? = state["treinoId"]
@@ -58,10 +61,10 @@ class ExercicioViewModel @Inject constructor(
         }
     }
 
-    fun saveExercicio() = viewModelScope.launch {
+    fun saveExercicio(uri: Uri?) = viewModelScope.launch {
         saveStatus.value = DataState.LOADING
         treinoId?.let {
-            exercicioRepository.addExercicio(exercicio, it).fold(
+            exercicioRepository.addExercicio(exercicio, it, uri).fold(
                 onSuccess = {
                     saveStatus.value = DataState.SUCCESS
                 },
@@ -86,6 +89,8 @@ class ExercicioViewModel @Inject constructor(
             )
         }
     }
+
+
 
     override fun onEvent(value: QuerySnapshot?, error: FirebaseFirestoreException?) {
         exercicios.value = value?.toObjects(Exercicio::class.java)

@@ -58,11 +58,25 @@
             android:id="@+id/image"
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:layout_marginTop="30dp"
-            android:src="@android:drawable/ic_menu_gallery"
+            android:layout_marginTop="15dp"
+            android:src="@drawable/upload"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/observacoesTextField" />
+
+        <Button
+            android:id="@+id/imageButton"
+            style="@style/Widget.Material3.Button.ElevatedButton.Icon"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/select_a_image"
+            android:textAllCaps="true"
+            android:textStyle="bold"
+            app:icon="@android:drawable/ic_menu_upload"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/image" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/createButton"

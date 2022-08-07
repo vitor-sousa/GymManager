@@ -41,7 +41,7 @@
         android:label="NewTreinoFragment" />
     <dialog
         android:id="@+id/newExercicioFragment"
-        android:name="com.vitorsousa.gymmanager.presentation.detail.NewExercicioFragment"
+        android:name="com.vitorsousa.gymmanager.presentation.exercicio.NewExercicioFragment"
         android:label="NewExercicioFragment" >
         <argument
             android:name="treinoId"
