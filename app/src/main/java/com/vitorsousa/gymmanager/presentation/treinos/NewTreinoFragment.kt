@@ -8,6 +8,7 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.google.android.material.textfield.TextInputLayout
 import com.vitorsousa.gymmanager.R
 import com.vitorsousa.gymmanager.databinding.FragmentNewTreinoBinding
@@ -19,6 +20,7 @@ class NewTreinoFragment : DialogFragment() {
     private var _binding: FragmentNewTreinoBinding? = null
     private val binding get() = _binding!!
     private val treinoViewModel: TreinoViewModel by activityViewModels()
+    private val args: NewTreinoFragmentArgs by navArgs()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +37,11 @@ class NewTreinoFragment : DialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        args.position?.let {
+            treinoViewModel.getTreinoForUpdate(it.toInt())
+            binding.newWorkout.text = getString(R.string.update_workout)
+            binding.createButton.text = getString(R.string.update)
+        }
         setupObservers()
     }
 
@@ -60,24 +67,30 @@ class NewTreinoFragment : DialogFragment() {
     }
 
     private fun setupObservers() {
-        binding.nomeTextField.editText?.setText(treinoViewModel.nome)
-        binding.descricaoTextField.editText?.setText(treinoViewModel.descricao)
+        binding.nomeTextField.editText?.setText(treinoViewModel.treino.nome)
+        binding.descricaoTextField.editText?.setText(treinoViewModel.treino.descricao)
 
         binding.nomeTextField.editText?.addTextChangedListener { nome ->
             nome?.let {
-                treinoViewModel.nome = nome.toString()
+                treinoViewModel.treino.nome = nome.toString()
             }
         }
 
         binding.descricaoTextField.editText?.addTextChangedListener { descricao ->
             descricao?.let {
-                treinoViewModel.descricao = descricao.toString()
+                treinoViewModel.treino.descricao = descricao.toString()
             }
         }
 
         binding.createButton.setOnClickListener {
-            if(!isEditTextsEmpty(binding.nomeTextField) && !isEditTextsEmpty(binding.descricaoTextField))
-                treinoViewModel.saveTreino()
+            if(!isEditTextsEmpty(binding.nomeTextField) && !isEditTextsEmpty(binding.descricaoTextField)){
+                if (!args.position.isNullOrEmpty()) {
+                    treinoViewModel.updateTreino()
+                } else {
+                    treinoViewModel.saveTreino()
+                }
+
+            }
         }
 
         treinoViewModel.saveStatus.observe(viewLifecycleOwner) {
@@ -87,7 +100,7 @@ class NewTreinoFragment : DialogFragment() {
                     binding.progressCircular.visibility = View.VISIBLE
                 }
                 DataState.SUCCESS -> {
-                    Toast.makeText(requireContext(), "Created with success", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), R.string.created_with_success, Toast.LENGTH_SHORT).show()
                     findNavController().popBackStack()
                 }
                 else -> {

@@ -19,6 +19,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.vitorsousa.gymmanager.R
 import com.vitorsousa.gymmanager.databinding.ActivityMainBinding
 import com.vitorsousa.gymmanager.presentation.login.LoginActivity
+import com.vitorsousa.gymmanager.presentation.treinos.TreinosFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -58,8 +59,10 @@ class MainActivity : AppCompatActivity() {
 
         navController.addOnDestinationChangedListener { _, navDestination: NavDestination, _ ->
             when (navDestination.id) {
-                R.id.treinoDetailFragment ->
+                R.id.treinoDetailFragment -> {
+                    binding.toolbar.menu.clear()
                     binding.bottomNavigationView.visibility = View.GONE
+                }
                 R.id.newTreinoFragment ->
                     binding.bottomNavigationView.visibility = View.GONE
                 else -> {

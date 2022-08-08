@@ -20,4 +20,7 @@
     <string name="observations">Observações</string>
     <string name="new_exercise">Novo Exercicio</string>
     <string name="select_a_image">Selecionar uma Imagem</string>
+    <string name="update">Atualizar</string>
+    <string name="update_workout">Atualizar Treino</string>
+    <string name="created_with_success">Criado com Sucesso!</string>
 </resources>

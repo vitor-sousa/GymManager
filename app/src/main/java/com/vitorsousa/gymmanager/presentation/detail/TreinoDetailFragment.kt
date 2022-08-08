@@ -69,6 +69,10 @@ class TreinoDetailFragment : Fragment(), ExercicioItemListener, DeleteExercicioI
             adapter.submitList(it)
         }
 
+        binding.editButton.setOnClickListener {
+            findNavController().navigate(TreinoDetailFragmentDirections.actionTreinoDetailFragmentToNewTreinoFragment(args.position.toString()))
+        }
+
         binding.addExercicioFloatButton.setOnClickListener {
             findNavController().navigate(TreinoDetailFragmentDirections.actionTreinoDetailFragmentToNewExercicioFragment(args.treinoId))
         }

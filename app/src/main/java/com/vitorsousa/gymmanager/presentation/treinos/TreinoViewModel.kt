@@ -1,6 +1,7 @@
 package com.vitorsousa.gymmanager.presentation.treinos
 
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.Timestamp
@@ -20,8 +21,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class TreinoViewModel @Inject constructor(
-    private val treinoRepository: TreinoRepository,
+    private val treinoRepository: TreinoRepository
 ): ViewModel(), EventListener<QuerySnapshot> {
+
 
     var treinosStatus = MutableLiveData<DataState>()
         private set
@@ -29,8 +31,7 @@ class TreinoViewModel @Inject constructor(
     var treinos = MutableLiveData<List<Treino>>()
         private set
 
-    var nome: String = ""
-    var descricao: String = ""
+    var treino = Treino()
 
     var saveStatus = SingleLiveData<DataState>()
         private set
@@ -42,18 +43,11 @@ class TreinoViewModel @Inject constructor(
 
 
     fun saveTreino() = viewModelScope.launch {
-        val treino = Treino(
-            treinoId = "",
-            nome =  nome,
-            descricao = descricao,
-            data = Timestamp(Date())
-        )
-
+        treino.data = Timestamp(Date())
         saveStatus.value = DataState.LOADING
         treinoRepository.addTreino(treino).fold(
             onSuccess = {
-                nome = ""
-                descricao = ""
+                treino = Treino()
                 saveStatus.value = DataState.SUCCESS
             },
             onFailure = {
@@ -70,6 +64,26 @@ class TreinoViewModel @Inject constructor(
         )
     }
 
+    fun updateTreino() = viewModelScope.launch {
+        treino.data = Timestamp(Date())
+        saveStatus.value = DataState.LOADING
+        treinoRepository.updateTreino(treino).fold(
+            onSuccess = {
+                treino = Treino()
+                saveStatus.value = DataState.SUCCESS
+            },
+            onFailure = {
+                saveStatus.value = DataState.ERROR
+            }
+        )
+    }
+
+
+    fun getTreinoForUpdate(position: Int) {
+        treinos.value?.get(position)?.let {
+            treino = it
+        }
+    }
 
 
     private fun getAllTreinos() = viewModelScope.launch {

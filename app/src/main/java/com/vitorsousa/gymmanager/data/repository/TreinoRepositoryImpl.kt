@@ -56,7 +56,6 @@ class TreinoRepositoryImpl @Inject constructor(
         withContext(Dispatchers.IO) {
             return@withContext try {
                 treinoRef
-                    ?.orderBy("data", Query.Direction.DESCENDING)
                     ?.addSnapshotListener (listenerRegistration)
                 Result.success(Unit)
             }  catch (e: Exception) {

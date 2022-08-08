@@ -21,16 +21,16 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp">
+            android:padding="5dp">
 
             <TextView
                 android:id="@+id/descricao"
                 style="@style/TextAppearance.Material3.TitleLarge"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="@{treino.descricao}"
                 android:gravity="center"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/editButton"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Descricao" />
@@ -38,16 +38,28 @@
             <TextView
                 android:id="@+id/data"
                 style="@style/TextAppearance.Material3.LabelLarge"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:textAlignment="center"
                 android:textStyle="bold"
                 app:dateToFormat="@{treino.data}"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/editButton"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/descricao"
                 tools:text="4 de ago de 2022 19:11" />
+
+            <Button
+                android:id="@+id/editButton"
+                style="@style/Widget.Material3.Button.IconButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:backgroundTint="@color/cardview_shadow_end_color"
+                app:icon="@android:drawable/ic_menu_edit"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/descricao"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/exerciciosTextView"

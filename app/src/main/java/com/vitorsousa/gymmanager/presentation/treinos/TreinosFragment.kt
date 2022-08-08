@@ -1,9 +1,7 @@
 package com.vitorsousa.gymmanager.presentation.treinos
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -42,6 +40,7 @@ class TreinosFragment: Fragment(), TreinoItemListener, DeleteTreinoItemListener 
             this.adapter = this@TreinosFragment.adapter
             this.layoutManager = LinearLayoutManager(context)
         }
+
         setupObservers()
     }
 
@@ -59,6 +58,7 @@ class TreinosFragment: Fragment(), TreinoItemListener, DeleteTreinoItemListener 
             )
         )
     }
+
 
     override fun onDeleteClickListener(id: String) {
         MaterialAlertDialogBuilder(requireContext())
@@ -89,7 +89,7 @@ class TreinosFragment: Fragment(), TreinoItemListener, DeleteTreinoItemListener 
     }
 
     private fun showNewTreinoDialog() {
-        findNavController().navigate(R.id.action_treinosFragment_to_newTreinoFragment)
+        findNavController().navigate(TreinosFragmentDirections.actionTreinosFragmentToNewTreinoFragment(null))
     }
 
 

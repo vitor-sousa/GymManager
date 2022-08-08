@@ -19,4 +19,7 @@
     <string name="observations">Observations</string>
     <string name="cant_be_empty">Can\'t be empty!</string>
     <string name="select_a_image">Select a Image</string>
+    <string name="update">Update</string>
+    <string name="update_workout">Update Workout</string>
+    <string name="created_with_success">Created with Success!</string>
 </resources>

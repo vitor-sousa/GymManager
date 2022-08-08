@@ -5,27 +5,21 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.fragment.navArgs
 import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.QuerySnapshot
-import com.google.firebase.storage.StorageReference
 import com.vitorsousa.gymmanager.core.SingleLiveData
 import com.vitorsousa.gymmanager.domain.models.DataState
 import com.vitorsousa.gymmanager.domain.models.Exercicio
 import com.vitorsousa.gymmanager.domain.repositories.ExercicioRepository
-import com.vitorsousa.gymmanager.presentation.detail.TreinoDetailFragmentArgs
-import dagger.assisted.Assisted
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
 class ExercicioViewModel @Inject constructor(
     private val exercicioRepository: ExercicioRepository,
-    state: SavedStateHandle,
-    private val storageReference: StorageReference
+    state: SavedStateHandle
 ): ViewModel(), EventListener<QuerySnapshot> {
 
     private var treinoId: String? = state["treinoId"]
