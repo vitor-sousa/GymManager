@@ -23,7 +23,6 @@ import javax.inject.Singleton
 object AppModule {
 
     @Provides
-    @Singleton
     fun provideFirebaseAuth(): FirebaseAuth = FirebaseAuth.getInstance()
 
     @Provides
@@ -42,12 +41,9 @@ object AppModule {
     @Provides
     @Named(TREINOS)
     fun provideTreinoRef(@Named(USERS) userRef: CollectionReference, auth: FirebaseAuth): CollectionReference? =
-        auth.currentUser?.let { userRef.document(it.uid).collection(TREINOS) }
-
-//    @Provides
-//    @Named(EXERCICIOS)
-//    fun provideExercicioRef(@Named(TREINOS) treinosRef: CollectionReference?): CollectionReference? =
-//        treinosRef?.let { treinosRef.document(it.id).collection(EXERCICIOS) }
+        auth.currentUser?.let {
+            userRef.document(it.uid).collection(TREINOS)
+        }
 
 
 }

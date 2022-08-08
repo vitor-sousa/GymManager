@@ -87,7 +87,7 @@ class TreinoDetailFragment : Fragment(), ExercicioItemListener, DeleteExercicioI
     }
 
     override fun onItemSelected(position: Int) {
-        findNavController().navigate(TreinoDetailFragmentDirections.actionTreinoDetailFragmentToNewExercicioFragment(args.treinoId))
+        TODO()
     }
 
     override fun onDeleteClickListener(id: String) {

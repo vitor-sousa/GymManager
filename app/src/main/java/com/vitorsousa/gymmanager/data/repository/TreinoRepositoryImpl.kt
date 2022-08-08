@@ -1,9 +1,11 @@
 package com.vitorsousa.gymmanager.data.repository
 
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QuerySnapshot
+import com.vitorsousa.gymmanager.core.Constants
 import com.vitorsousa.gymmanager.core.Constants.TREINOS
 import com.vitorsousa.gymmanager.domain.models.Treino
 import com.vitorsousa.gymmanager.domain.repositories.TreinoRepository
@@ -13,8 +15,12 @@ import javax.inject.Inject
 import javax.inject.Named
 
 class TreinoRepositoryImpl @Inject constructor(
-    @Named(TREINOS) private val treinoRef: CollectionReference?,
+    @Named(Constants.USERS) private val userRef: CollectionReference?,
 ): TreinoRepository {
+
+    private val treinoRef = FirebaseAuth.getInstance().currentUser?.let {
+        userRef?.document(it.uid)?.collection(TREINOS)
+    }
 
     override suspend fun addTreino(treino: Treino): Result<Treino> =
         withContext(Dispatchers.IO) {
