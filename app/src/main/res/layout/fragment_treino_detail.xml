@@ -8,7 +8,7 @@
         <import type="android.view.View"/>
         <variable
             name="viewModel"
-            type="com.vitorsousa.gymmanager.presentation.exercicio.ExercicioViewModel" />
+            type="com.vitorsousa.gymmanager.presentation.exercicios.ExercicioViewModel" />
         <variable
             name="treino"
             type="com.vitorsousa.gymmanager.domain.models.Treino" />

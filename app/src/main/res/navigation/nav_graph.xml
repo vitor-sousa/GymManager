@@ -24,7 +24,7 @@
         tools:layout="@layout/fragment_account"/>
     <fragment
         android:id="@+id/treinoDetailFragment"
-        android:name="com.vitorsousa.gymmanager.presentation.detail.TreinoDetailFragment">
+        android:name="com.vitorsousa.gymmanager.presentation.treinos.TreinoDetailFragment">
         <argument
             android:name="position"
             app:argType="integer" />
@@ -49,7 +49,7 @@
     </dialog>
     <dialog
         android:id="@+id/newExercicioFragment"
-        android:name="com.vitorsousa.gymmanager.presentation.exercicio.NewExercicioFragment"
+        android:name="com.vitorsousa.gymmanager.presentation.exercicios.NewExercicioFragment"
         android:label="NewExercicioFragment" >
         <argument
             android:name="treinoId"

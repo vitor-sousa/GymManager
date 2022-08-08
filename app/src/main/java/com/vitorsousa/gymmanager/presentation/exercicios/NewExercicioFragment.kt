@@ -1,17 +1,16 @@
-package com.vitorsousa.gymmanager.presentation.exercicio
+package com.vitorsousa.gymmanager.presentation.exercicios
 
 import android.app.Dialog
-import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
-import androidx.activity.result.ActivityResultCaller
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.google.android.material.textfield.TextInputLayout
 import com.vitorsousa.gymmanager.R
 import com.vitorsousa.gymmanager.databinding.FragmentNewExercicioBinding
@@ -24,9 +23,7 @@ class NewExercicioFragment : DialogFragment() {
     private var _binding: FragmentNewExercicioBinding? = null
     private val binding get() = _binding!!
     private val exercicioViewModel: ExercicioViewModel by viewModels()
-
     private var uri: Uri? = null
-
 
     private val getContent = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
         uri?.let {

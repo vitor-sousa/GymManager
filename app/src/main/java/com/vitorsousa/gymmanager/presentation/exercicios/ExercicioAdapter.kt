@@ -1,4 +1,4 @@
-package com.vitorsousa.gymmanager.presentation.exercicio
+package com.vitorsousa.gymmanager.presentation.exercicios
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,9 +7,7 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.vitorsousa.gymmanager.databinding.ExercicioItemBinding
-import com.vitorsousa.gymmanager.databinding.TreinoItemBinding
 import com.vitorsousa.gymmanager.domain.models.Exercicio
-import com.vitorsousa.gymmanager.domain.models.Treino
 
 
 interface ExercicioItemListener {
@@ -65,7 +63,7 @@ class ExercicioAdapter(
         val deleteButton = binding.deleteButton
 
         fun bindItem(item: Exercicio) {
-            binding.exercico = item
+            binding.exercicio = item
             binding.executePendingBindings()
         }
     }

@@ -1,4 +1,4 @@
-package com.vitorsousa.gymmanager.presentation.exercicio
+package com.vitorsousa.gymmanager.presentation.exercicios
 
 import android.net.Uri
 import androidx.lifecycle.MutableLiveData

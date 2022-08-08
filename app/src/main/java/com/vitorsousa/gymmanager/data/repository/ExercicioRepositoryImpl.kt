@@ -38,8 +38,18 @@ class ExercicioRepositoryImpl @Inject constructor(
             }
     }
 
-    override suspend fun updateExercicio(exercicio: Exercicio, treinoId: String): Result<Unit> {
-        TODO("Not yet implemented")
+    override suspend fun updateExercicio(exercicio: Exercicio, treinoId: String): Result<Unit> =
+        withContext(Dispatchers.IO) {
+            try {
+                treinosRef
+                    ?.document(treinoId)
+                    ?.collection(EXERCICIOS)
+                    ?.document(exercicio.exercicioId)
+                    ?.set(exercicio)
+                return@withContext Result.success(Unit)
+            } catch (e: Exception) {
+                return@withContext Result.failure(e)
+            }
     }
 
     override suspend fun deleteExercicio(exercicioId: String, treinoId: String): Result<Unit> =
@@ -54,7 +64,6 @@ class ExercicioRepositoryImpl @Inject constructor(
             } catch (e: Exception) {
                 return@withContext Result.failure(e)
             }
-
     }
 
 

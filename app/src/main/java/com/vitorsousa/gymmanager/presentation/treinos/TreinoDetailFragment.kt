@@ -1,27 +1,25 @@
-package com.vitorsousa.gymmanager.presentation.detail
+package com.vitorsousa.gymmanager.presentation.treinos
 
 import android.os.Bundle
-import android.view.*
-import androidx.core.view.MenuHost
-import androidx.core.view.MenuProvider
+import android.view.LayoutInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.viewmodel.viewModelFactory
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.navigation.navGraphViewModels
 import androidx.navigation.ui.onNavDestinationSelected
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.vitorsousa.gymmanager.R
 import com.vitorsousa.gymmanager.databinding.FragmentTreinoDetailBinding
 import com.vitorsousa.gymmanager.presentation.MainActivity
-import com.vitorsousa.gymmanager.presentation.exercicio.*
-import com.vitorsousa.gymmanager.presentation.treinos.TreinoAdapter
-import com.vitorsousa.gymmanager.presentation.treinos.TreinoViewModel
+import com.vitorsousa.gymmanager.presentation.exercicios.DeleteExercicioItemListener
+import com.vitorsousa.gymmanager.presentation.exercicios.ExercicioAdapter
+import com.vitorsousa.gymmanager.presentation.exercicios.ExercicioItemListener
+import com.vitorsousa.gymmanager.presentation.exercicios.ExercicioViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -89,7 +87,7 @@ class TreinoDetailFragment : Fragment(), ExercicioItemListener, DeleteExercicioI
     }
 
     override fun onItemSelected(position: Int) {
-        println(position)
+        findNavController().navigate(TreinoDetailFragmentDirections.actionTreinoDetailFragmentToNewExercicioFragment(args.treinoId))
     }
 
     override fun onDeleteClickListener(id: String) {
