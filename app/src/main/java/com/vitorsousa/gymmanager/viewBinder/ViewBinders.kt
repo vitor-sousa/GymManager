@@ -8,8 +8,6 @@ import com.bumptech.glide.Glide
 import com.google.firebase.Timestamp
 import com.vitorsousa.gymmanager.R
 import de.hdodenhof.circleimageview.CircleImageView
-import java.time.LocalDate
-import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 import java.util.*

@@ -1,14 +1,16 @@
 package com.vitorsousa.gymmanager.data.repository
 
 import android.net.Uri
-import com.google.firebase.firestore.*
+import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.EventListener
+import com.google.firebase.firestore.Query
+import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.storage.StorageReference
 import com.vitorsousa.gymmanager.core.Constants.EXERCICIOS
 import com.vitorsousa.gymmanager.core.Constants.TREINOS
 import com.vitorsousa.gymmanager.domain.models.Exercicio
 import com.vitorsousa.gymmanager.domain.repositories.ExercicioRepository
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Named

@@ -87,7 +87,7 @@ class TreinoDetailFragment : Fragment(), ExercicioItemListener, DeleteExercicioI
     }
 
     override fun onItemSelected(position: Int) {
-        TODO()
+        /* no-op */
     }
 
     override fun onDeleteClickListener(id: String) {

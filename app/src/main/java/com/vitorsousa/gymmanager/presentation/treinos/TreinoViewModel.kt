@@ -1,7 +1,6 @@
 package com.vitorsousa.gymmanager.presentation.treinos
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.Timestamp
@@ -10,9 +9,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.QuerySnapshot
 import com.vitorsousa.gymmanager.core.SingleLiveData
 import com.vitorsousa.gymmanager.domain.models.DataState
-import com.vitorsousa.gymmanager.domain.models.Exercicio
 import com.vitorsousa.gymmanager.domain.models.Treino
-import com.vitorsousa.gymmanager.domain.repositories.ExercicioRepository
 import com.vitorsousa.gymmanager.domain.repositories.TreinoRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch

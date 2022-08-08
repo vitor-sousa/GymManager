@@ -10,7 +10,6 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.google.android.material.textfield.TextInputLayout
 import com.vitorsousa.gymmanager.R
 import com.vitorsousa.gymmanager.databinding.FragmentNewExercicioBinding
