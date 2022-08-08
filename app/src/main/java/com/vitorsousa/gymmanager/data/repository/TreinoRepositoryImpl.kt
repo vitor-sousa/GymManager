@@ -17,12 +17,13 @@ class TreinoRepositoryImpl @Inject constructor(
     @Named(Constants.USERS) private val userRef: CollectionReference?,
 ): TreinoRepository {
 
-    private val treinoRef = FirebaseAuth.getInstance().currentUser?.let {
-        userRef?.document(it.uid)?.collection(TREINOS)
-    }
+
 
     override suspend fun addTreino(treino: Treino): Result<Treino> =
         withContext(Dispatchers.IO) {
+            val treinoRef = FirebaseAuth.getInstance().currentUser?.let {
+                userRef?.document(it.uid)?.collection(TREINOS)
+            }
             try {
                 treinoRef
                     ?.add(treino)
@@ -35,6 +36,9 @@ class TreinoRepositoryImpl @Inject constructor(
     override suspend fun updateTreino(treino: Treino): Result<Unit> =
         withContext(Dispatchers.IO) {
             try {
+                val treinoRef = FirebaseAuth.getInstance().currentUser?.let {
+                    userRef?.document(it.uid)?.collection(TREINOS)
+                }
                 treinoRef
                     ?.document(treino.treinoId)
                     ?.set(treino)
@@ -47,6 +51,9 @@ class TreinoRepositoryImpl @Inject constructor(
     override suspend fun deleteTreino(treinoId: String): Result<Unit> =
         withContext(Dispatchers.IO) {
             return@withContext try {
+                val treinoRef = FirebaseAuth.getInstance().currentUser?.let {
+                    userRef?.document(it.uid)?.collection(TREINOS)
+                }
                 treinoRef
                     ?.document(treinoId)
                     ?.delete()
@@ -60,6 +67,9 @@ class TreinoRepositoryImpl @Inject constructor(
     override suspend fun getAllTreinos(listenerRegistration: EventListener<QuerySnapshot>): Result<Unit> =
         withContext(Dispatchers.IO) {
             return@withContext try {
+                val treinoRef = FirebaseAuth.getInstance().currentUser?.let {
+                    userRef?.document(it.uid)?.collection(TREINOS)
+                }
                 treinoRef
                     ?.addSnapshotListener (listenerRegistration)
                 Result.success(Unit)
