@@ -3,6 +3,26 @@
 <a href="https://github.com/vitor-sousa/GymManager/raw/main/output/app-debug.apk"><strong>Download APK</strong></a>
 
 
+ # Specifications
+ 
+* Kotlin
+* MVVM
+* Coroutines
+* Material Design 3
+* Jetpack Navigation
+* RecyclerView
+* DataBinding
+* ViewBinding
+* LiveData
+* Dagger Hilt
+* Firebase AuthUI
+* Firebase Firestore
+* Firebase Storage
+* Glide
+* <a href="https://github.com/hdodenhof/CircleImageView">CircleImageView</a>
+* Repository
+
+
 
  # Images
 
