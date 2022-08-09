@@ -32,7 +32,7 @@ class ExercicioRepositoryImpl @Inject constructor(
                                 saveExercicio(exercicio, treinoId)
                             }
                         }
-                }else
+                } else
                     saveExercicio(exercicio, treinoId)
                 return@withContext Result.success(exercicio)
             } catch (e: Exception) {
@@ -40,14 +40,20 @@ class ExercicioRepositoryImpl @Inject constructor(
             }
     }
 
-    override suspend fun updateExercicio(exercicio: Exercicio, treinoId: String): Result<Unit> =
+    override suspend fun updateExercicio(exercicio: Exercicio, treinoId: String, uri: Uri?): Result<Unit> =
         withContext(Dispatchers.IO) {
             try {
-                treinosRef
-                    ?.document(treinoId)
-                    ?.collection(EXERCICIOS)
-                    ?.document(exercicio.exercicioId)
-                    ?.set(exercicio)
+                if(uri != null) {
+                    storageReference.child("$treinoId/${exercicio.nome}").putFile(uri)
+                        .addOnSuccessListener {
+                            val result = it.metadata?.reference?.downloadUrl
+                            result?.addOnSuccessListener { finalUri ->
+                                exercicio.imagem = finalUri.toString()
+                                updateExercicio(exercicio, treinoId)
+                            }
+                        }
+                } else
+                    updateExercicio(exercicio, treinoId)
                 return@withContext Result.success(Unit)
             } catch (e: Exception) {
                 return@withContext Result.failure(e)
@@ -89,6 +95,14 @@ class ExercicioRepositoryImpl @Inject constructor(
             ?.document(treinoId)
             ?.collection(EXERCICIOS)
             ?.add(exercicio)
+    }
+
+    private fun updateExercicio(exercicio: Exercicio, treinoId: String) {
+        treinosRef
+            ?.document(treinoId)
+            ?.collection(EXERCICIOS)
+            ?.document(exercicio.exercicioId)
+            ?.set(exercicio)
     }
 
 

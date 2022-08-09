@@ -3,17 +3,23 @@ package com.vitorsousa.gymmanager.presentation.exercicios
 import android.app.Dialog
 import android.net.Uri
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.view.Window
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.google.android.material.textfield.TextInputLayout
 import com.vitorsousa.gymmanager.R
 import com.vitorsousa.gymmanager.databinding.FragmentNewExercicioBinding
 import com.vitorsousa.gymmanager.domain.models.DataState
+import com.vitorsousa.gymmanager.domain.models.Exercicio
+import com.vitorsousa.gymmanager.viewBinder.loadScrUrl
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -21,12 +27,13 @@ class NewExercicioFragment : DialogFragment() {
 
     private var _binding: FragmentNewExercicioBinding? = null
     private val binding get() = _binding!!
-    private val exercicioViewModel: ExercicioViewModel by viewModels()
+    private val exercicioViewModel: ExercicioViewModel by activityViewModels()
+    private val args: NewExercicioFragmentArgs by navArgs()
     private var uri: Uri? = null
 
     private val getContent = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
         uri?.let {
-            binding.image.setImageURI(uri)
+            binding.image.loadScrUrl(it.toString())
             this.uri = uri
         }
     }
@@ -47,13 +54,25 @@ class NewExercicioFragment : DialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        exercicioViewModel.exercicio = Exercicio()
+
+        args.exercicioId?.let {
+            exercicioViewModel.getExercicioForUpdate(it)
+            binding.newExercise.text = "Update Exercise"
+            binding.createButton.text = "Update"
+
+            binding.nomeTextField.editText?.setText(exercicioViewModel.exercicio.nome)
+            binding.observacoesTextField.editText?.setText(exercicioViewModel.exercicio.observacoes)
+            binding.image.loadScrUrl(exercicioViewModel.exercicio.imagem)
+        }
+
         setupObservers()
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = super.onCreateDialog(savedInstanceState)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
         return dialog
     }
 
@@ -72,9 +91,6 @@ class NewExercicioFragment : DialogFragment() {
     }
 
     private fun setupObservers() {
-        binding.nomeTextField.editText?.setText(exercicioViewModel.exercicio.nome)
-        binding.observacoesTextField.editText?.setText(exercicioViewModel.exercicio.observacoes)
-
         binding.nomeTextField.editText?.addTextChangedListener { nome ->
             nome?.let {
                 exercicioViewModel.exercicio.nome = nome.toString()
@@ -89,7 +105,11 @@ class NewExercicioFragment : DialogFragment() {
 
         binding.createButton.setOnClickListener {
             if(!isEditTextsEmpty(binding.nomeTextField) && !isEditTextsEmpty(binding.observacoesTextField))
-                exercicioViewModel.saveExercicio(uri)
+                if (!args.exercicioId.isNullOrEmpty()) {
+                    exercicioViewModel.updateExercicio(args.treinoId, uri)
+                } else {
+                    exercicioViewModel.saveExercicio(args.treinoId, uri)
+                }
         }
 
         binding.imageButton.setOnClickListener {

@@ -51,7 +51,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:saveEnabled="true"
-                android:inputType="textAutoComplete|textCapSentences" />
+                android:lines="4"
+                android:inputType="textMultiLine|textAutoComplete|textCapSentences" />
         </com.google.android.material.textfield.TextInputLayout>
 
 

@@ -62,8 +62,18 @@ class MainActivity : AppCompatActivity() {
                     binding.toolbar.menu.clear()
                     binding.bottomNavigationView.visibility = View.GONE
                 }
-                R.id.newTreinoFragment ->
+                R.id.newTreinoFragment -> {
+                    binding.toolbar.menu.clear()
                     binding.bottomNavigationView.visibility = View.GONE
+                }
+                R.id.newExercicioFragment -> {
+                    binding.toolbar.menu.clear()
+                    binding.bottomNavigationView.visibility = View.GONE
+                }
+                R.id.exercicioDetailFragment -> {
+                    binding.toolbar.menu.clear()
+                    binding.bottomNavigationView.visibility = View.GONE
+                }
                 else -> {
                     binding.toolbar.visibility = View.VISIBLE
                     binding.bottomNavigationView.visibility = View.VISIBLE

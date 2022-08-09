@@ -37,13 +37,16 @@
         <action
             android:id="@+id/action_treinoDetailFragment_to_newTreinoFragment"
             app:destination="@id/newTreinoFragment" />
+        <action
+            android:id="@+id/action_treinoDetailFragment_to_exercicioDetailFragment"
+            app:destination="@id/exercicioDetailFragment" />
     </fragment>
     <dialog
         android:id="@+id/newTreinoFragment"
         android:name="com.vitorsousa.gymmanager.presentation.treinos.NewTreinoFragment"
         android:label="NewTreinoFragment" >
         <argument
-            android:name="position"
+            android:name="treinoId"
             app:argType="string"
             app:nullable="true" />
     </dialog>
@@ -54,5 +57,23 @@
         <argument
             android:name="treinoId"
             app:argType="string" />
+        <argument
+            android:name="exercicioId"
+            app:argType="string"
+            app:nullable="true" />
     </dialog>
+    <fragment
+        android:id="@+id/exercicioDetailFragment"
+        android:name="com.vitorsousa.gymmanager.presentation.exercicios.ExercicioDetailFragment"
+        android:label="ExercicioDetailFragment" >
+        <argument
+            android:name="exercicioId"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_exercicioDetailFragment_to_newExercicioFragment"
+            app:destination="@id/newExercicioFragment" />
+        <argument
+            android:name="treinoId"
+            app:argType="string" />
+    </fragment>
 </navigation>

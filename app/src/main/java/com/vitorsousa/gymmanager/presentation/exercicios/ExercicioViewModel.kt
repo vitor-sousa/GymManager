@@ -1,8 +1,8 @@
 package com.vitorsousa.gymmanager.presentation.exercicios
 
 import android.net.Uri
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.firestore.EventListener
@@ -18,11 +18,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ExercicioViewModel @Inject constructor(
-    private val exercicioRepository: ExercicioRepository,
-    state: SavedStateHandle
+    private val exercicioRepository: ExercicioRepository
 ): ViewModel(), EventListener<QuerySnapshot> {
-
-    private var treinoId: String? = state["treinoId"]
 
     var exercicios = MutableLiveData<List<Exercicio>>()
         private set
@@ -35,55 +32,69 @@ class ExercicioViewModel @Inject constructor(
     var saveStatus = SingleLiveData<DataState>()
         private set
 
-    init {
-        getAllExercicios()
-    }
 
 
-    private fun getAllExercicios() = viewModelScope.launch {
-        treinoId?.let {
-            exerciciosStatus.value = DataState.LOADING
-            exercicioRepository.getAllExercicios(this@ExercicioViewModel, it).fold(
-                onSuccess = {
-                    exerciciosStatus.value = DataState.SUCCESS
-                },
-                onFailure = {
-                    exerciciosStatus.value = DataState.ERROR
-                    println("error: ${it.message}")
-                }
-            )
-        }
-    }
-
-    fun saveExercicio(uri: Uri?) = viewModelScope.launch {
-        saveStatus.value = DataState.LOADING
-        treinoId?.let {
-            exercicioRepository.addExercicio(exercicio, it, uri).fold(
-                onSuccess = {
-                    saveStatus.value = DataState.SUCCESS
-                },
-                onFailure = {
-                    saveStatus.value = DataState.ERROR
-                    println("error: ${it.message}")
-                }
-            )
-        }
-    }
-
-    fun deleteExercicio(exercicioId: String) = viewModelScope.launch {
+    fun getAllExercicios(treinoId: String) = viewModelScope.launch {
+        exercicios.value = emptyList()
         exerciciosStatus.value = DataState.LOADING
-        treinoId?.let {
-            exercicioRepository.deleteExercicio(exercicioId, it).fold(
-                onSuccess = {
-                    exerciciosStatus.value = DataState.SUCCESS
-                },
-                onFailure = {
-                    exerciciosStatus.value = DataState.ERROR
-                }
-            )
-        }
+        exercicioRepository.getAllExercicios(this@ExercicioViewModel, treinoId).fold(
+            onSuccess = {
+                exerciciosStatus.value = DataState.SUCCESS
+            },
+            onFailure = {
+                exerciciosStatus.value = DataState.ERROR
+                println("error: ${it.message}")
+            }
+        )
     }
 
+    fun saveExercicio(treinoId: String, uri: Uri?) = viewModelScope.launch {
+        saveStatus.value = DataState.LOADING
+        exercicioRepository.addExercicio(exercicio, treinoId, uri).fold(
+            onSuccess = {
+                saveStatus.value = DataState.SUCCESS
+            },
+            onFailure = {
+                saveStatus.value = DataState.ERROR
+                println("error: ${it.message}")
+            }
+        )
+    }
+
+    fun updateExercicio(treinoId: String, uri: Uri?)  = viewModelScope.launch {
+        saveStatus.value = DataState.LOADING
+        exercicioRepository.updateExercicio(exercicio, treinoId, uri).fold(
+            onSuccess = {
+                saveStatus.value = DataState.SUCCESS
+            },
+            onFailure = {
+                saveStatus.value = DataState.ERROR
+                println("error: ${it.message}")
+            }
+        )
+
+    }
+
+
+    fun deleteExercicio(treinoId: String, exercicioId: String) = viewModelScope.launch {
+        exerciciosStatus.value = DataState.LOADING
+        exercicioRepository.deleteExercicio(exercicioId, treinoId).fold(
+            onSuccess = {
+                exerciciosStatus.value = DataState.SUCCESS
+            },
+            onFailure = {
+                exerciciosStatus.value = DataState.ERROR
+            }
+        )
+    }
+
+    fun getExercicioForUpdate(exercicioId: String) {
+        exercicios.value?.find { exercicio ->
+            exercicio.exercicioId == exercicioId
+        }?.let {
+            exercicio = it
+        }
+    }
 
 
     override fun onEvent(value: QuerySnapshot?, error: FirebaseFirestoreException?) {

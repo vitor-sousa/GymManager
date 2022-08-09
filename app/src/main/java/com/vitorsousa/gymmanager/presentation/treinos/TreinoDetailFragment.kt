@@ -29,7 +29,7 @@ class TreinoDetailFragment : Fragment(), ExercicioItemListener, DeleteExercicioI
     private val binding get() = _binding!!
     private val args: TreinoDetailFragmentArgs by navArgs()
     private val treinoViewModel: TreinoViewModel by activityViewModels()
-    private val exercicioViewModel: ExercicioViewModel by viewModels()
+    private val exercicioViewModel: ExercicioViewModel by activityViewModels()
     private lateinit var adapter: ExercicioAdapter
 
     override fun onCreateView(
@@ -57,22 +57,24 @@ class TreinoDetailFragment : Fragment(), ExercicioItemListener, DeleteExercicioI
     }
 
     private fun setupObservers() {
-        treinoViewModel.treinos.observe(viewLifecycleOwner) {
-            val treino = it[args.position]
+        treinoViewModel.treinos.observe(viewLifecycleOwner) { treinoList ->
+            val treino = treinoList.find { treino ->  treino.treinoId == args.treinoId }
             binding.treino = treino
-            (requireActivity() as MainActivity).supportActionBar?.title = treino.nome
+            (requireActivity() as MainActivity).supportActionBar?.title = treino?.nome
         }
+
+        exercicioViewModel.getAllExercicios(args.treinoId)
 
         exercicioViewModel.exercicios.observe(viewLifecycleOwner) {
             adapter.submitList(it)
         }
 
         binding.editButton.setOnClickListener {
-            findNavController().navigate(TreinoDetailFragmentDirections.actionTreinoDetailFragmentToNewTreinoFragment(args.position.toString()))
+            findNavController().navigate(TreinoDetailFragmentDirections.actionTreinoDetailFragmentToNewTreinoFragment(args.treinoId))
         }
 
         binding.addExercicioFloatButton.setOnClickListener {
-            findNavController().navigate(TreinoDetailFragmentDirections.actionTreinoDetailFragmentToNewExercicioFragment(args.treinoId))
+            findNavController().navigate(TreinoDetailFragmentDirections.actionTreinoDetailFragmentToNewExercicioFragment(args.treinoId, null))
         }
     }
 
@@ -86,8 +88,8 @@ class TreinoDetailFragment : Fragment(), ExercicioItemListener, DeleteExercicioI
         _binding = null
     }
 
-    override fun onItemSelected(position: Int) {
-        /* no-op */
+    override fun onItemSelected(id: String) {
+        findNavController().navigate(TreinoDetailFragmentDirections.actionTreinoDetailFragmentToExercicioDetailFragment(id, args.treinoId))
     }
 
     override fun onDeleteClickListener(id: String) {
@@ -96,7 +98,7 @@ class TreinoDetailFragment : Fragment(), ExercicioItemListener, DeleteExercicioI
             .setMessage(R.string.are_you_sure_delete_exercise)
             .setNegativeButton(R.string.cancel) { _, _ -> }
             .setPositiveButton(R.string.delete) { _, _ ->
-                exercicioViewModel.deleteExercicio(id)
+                exercicioViewModel.deleteExercicio(args.treinoId, id)
             }
             .create()
             .show()

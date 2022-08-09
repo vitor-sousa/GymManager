@@ -3,6 +3,7 @@ package com.vitorsousa.gymmanager.data.repository
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.EventListener
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QuerySnapshot
 import com.vitorsousa.gymmanager.core.Constants
 import com.vitorsousa.gymmanager.core.Constants.TREINOS
@@ -16,7 +17,6 @@ import javax.inject.Named
 class TreinoRepositoryImpl @Inject constructor(
     @Named(Constants.USERS) private val userRef: CollectionReference?,
 ): TreinoRepository {
-
 
 
     override suspend fun addTreino(treino: Treino): Result<Treino> =
@@ -52,7 +52,9 @@ class TreinoRepositoryImpl @Inject constructor(
         withContext(Dispatchers.IO) {
             return@withContext try {
                 val treinoRef = FirebaseAuth.getInstance().currentUser?.let {
-                    userRef?.document(it.uid)?.collection(TREINOS)
+                    userRef
+                        ?.document(it.uid)
+                        ?.collection(TREINOS)
                 }
                 treinoRef
                     ?.document(treinoId)
@@ -68,7 +70,10 @@ class TreinoRepositoryImpl @Inject constructor(
         withContext(Dispatchers.IO) {
             return@withContext try {
                 val treinoRef = FirebaseAuth.getInstance().currentUser?.let {
-                    userRef?.document(it.uid)?.collection(TREINOS)
+                    userRef
+                        ?.document(it.uid)
+                        ?.collection(TREINOS)
+                        ?.orderBy("data", Query.Direction.DESCENDING)
                 }
                 treinoRef
                     ?.addSnapshotListener (listenerRegistration)

@@ -13,6 +13,8 @@ import com.google.android.material.textfield.TextInputLayout
 import com.vitorsousa.gymmanager.R
 import com.vitorsousa.gymmanager.databinding.FragmentNewTreinoBinding
 import com.vitorsousa.gymmanager.domain.models.DataState
+import com.vitorsousa.gymmanager.domain.models.Exercicio
+import com.vitorsousa.gymmanager.domain.models.Treino
 
 
 class NewTreinoFragment : DialogFragment() {
@@ -37,8 +39,11 @@ class NewTreinoFragment : DialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        args.position?.let {
-            treinoViewModel.getTreinoForUpdate(it.toInt())
+
+        treinoViewModel.treino = Treino()
+
+        args.treinoId?.let {
+            treinoViewModel.getTreinoForUpdate(it)
             binding.newWorkout.text = getString(R.string.update_workout)
             binding.createButton.text = getString(R.string.update)
         }
@@ -84,7 +89,7 @@ class NewTreinoFragment : DialogFragment() {
 
         binding.createButton.setOnClickListener {
             if(!isEditTextsEmpty(binding.nomeTextField) && !isEditTextsEmpty(binding.descricaoTextField)){
-                if (!args.position.isNullOrEmpty()) {
+                if (!args.treinoId.isNullOrEmpty()) {
                     treinoViewModel.updateTreino()
                 } else {
                     treinoViewModel.saveTreino()

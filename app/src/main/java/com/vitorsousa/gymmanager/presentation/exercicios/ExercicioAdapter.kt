@@ -11,7 +11,7 @@ import com.vitorsousa.gymmanager.domain.models.Exercicio
 
 
 interface ExercicioItemListener {
-    fun onItemSelected(position: Int)
+    fun onItemSelected(id: String)
 }
 
 interface DeleteExercicioItemListener {
@@ -41,7 +41,9 @@ class ExercicioAdapter(
         val item = mDiffer.currentList[position]
         holder.bindItem(item)
         holder.view.setOnClickListener {
-            onItemSelectedListener.onItemSelected(position)
+            onItemSelectedListener.onItemSelected(
+                id = item.exercicioId
+            )
         }
         holder.deleteButton.setOnClickListener {
             onDeleteTreinoItemListener.onDeleteClickListener(
@@ -75,7 +77,7 @@ class ExercicioAdapter(
         }
 
         override fun areContentsTheSame(oldItem: Exercicio, newItem: Exercicio): Boolean {
-            return oldItem == newItem
+            return newItem == oldItem
         }
 
     }

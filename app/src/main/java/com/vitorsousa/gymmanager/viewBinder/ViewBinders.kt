@@ -30,7 +30,7 @@ fun ImageView.loadScrUrl(uri: String?){
             .with(this)
             .load(uri)
             .centerCrop()
-            .error(R.mipmap.ic_launcher_foreground)
+            .placeholder(R.mipmap.ic_launcher_foreground)
             .into(this)
     }
 }

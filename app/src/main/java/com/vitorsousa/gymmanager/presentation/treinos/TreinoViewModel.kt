@@ -76,8 +76,10 @@ class TreinoViewModel @Inject constructor(
     }
 
 
-    fun getTreinoForUpdate(position: Int) {
-        treinos.value?.get(position)?.let {
+    fun getTreinoForUpdate(treinoId: String) {
+        treinos.value?.find { treino ->
+            treino.treinoId == treinoId
+        }?.let {
             treino = it
         }
     }
