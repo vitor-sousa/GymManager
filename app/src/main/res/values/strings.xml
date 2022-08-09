@@ -22,4 +22,5 @@
     <string name="update">Update</string>
     <string name="update_workout">Update Workout</string>
     <string name="created_with_success">Created with Success!</string>
+    <string name="update_exercise">Update Exercise</string>
 </resources>

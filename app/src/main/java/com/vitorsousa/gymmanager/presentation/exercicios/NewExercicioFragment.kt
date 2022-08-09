@@ -59,8 +59,8 @@ class NewExercicioFragment : DialogFragment() {
 
         args.exercicioId?.let {
             exercicioViewModel.getExercicioForUpdate(it)
-            binding.newExercise.text = "Update Exercise"
-            binding.createButton.text = "Update"
+            binding.newExercise.text = getString(R.string.update_exercise)
+            binding.createButton.text = getString(R.string.update)
 
             binding.nomeTextField.editText?.setText(exercicioViewModel.exercicio.nome)
             binding.observacoesTextField.editText?.setText(exercicioViewModel.exercicio.observacoes)
